@@ -1,0 +1,84 @@
+DOINGTHINGSAI + NAMMAKUPPAI — FACTS ONLY
+Sourced 2026-09-28. No inference. Unverified items marked as such.
+
+=== DOINGTHINGSAI ===
+
+INSTAGRAM (@doingthingsai)
+- Bio: "Doing Things AI - For people who actually build with AI" [instagram.com/doingthingsai]
+- 180 followers / 57 following (as of fetch date). [instagram.com/doingthingsai]
+- Bio link: luma.com/h9p8dhgk. A second bio link exists but its URL text could not be read.
+- Feed posts observed dated Sept 6–27, 2026 — event announcements, community partnerships.
+
+FLAGSHIP EVENT: "BUILD & BLEND"
+- Recurring AI builders' night in Chennai. Description: "developing ideas from concept to launch" — prototyping, distribution, customer acquisition, revenue. [luma.com/h9p8dhgk]
+- Currently on edition 15 (event titled "Build & Blend 15").
+- Sept 30, 2026 edition: Madras Adda, 119 Dr Radha Krishnan Salai, Mylapore, Chennai 600004. 7–10 PM. ₹250 entry incl. snacks/refreshments. Approval-required registration, payment confirmed via WhatsApp to "Chandru."
+- Stated eligibility: "Founders, developers, designers, marketers, students, professionals, and AI enthusiasts — no finished product or startup required."
+- Listed hosts: Doing Things AI, Chandrasekar J, Shankar K.
+- First edition (per Chandru's own LinkedIn/X post) was at Third Wave Coffee, Adyar — 6 attendees, closed-door by design.
+
+THIRD-PARTY MENTION
+- Become (Chennai design consultancy) hosted "an AI Product Showcase by Chandru of Doing Thing AI" (their spelling, no final "s") in a Pay-As-You-Wish format, dated June 2026. [become.team]
+
+BUILD & BLEND EDITIONS — CONFIRMED (Instagram captions, exact quotes, fetched 2026-09-29)
+- Edition 15: Madras Adda, Mylapore. Sept 30, 2026. Host: @shankark.313. [instagram.com/p/Ddzewffzh0Q/]
+- Edition 14: Love Hope HQ, Adyar. Sept 23-ish, 2026. "8 people. 3 hours." Self-description: "Doing Things AI, a 0→1 AI builder community." [instagram.com/p/Ddo2Fc2Aelu/, instagram.com/p/DdoRQXIBSSi/]
+- Edition 13: announced Sept 13, 2026. Theme: "Build something. Find users. Let's talk about money." [instagram.com/p/DdPIOORBLfV/]
+- Edition 12: Time Café, Nungambakkam. Sept 6, 2026. [instagram.com/p/Dc-QKm0hSyx/]
+- Edition 11: hosted by @shankark.313. [instagram.com/reel/Dc808CLISSF/]
+- Edition 1 (first ever): Third Wave Coffee, Adyar. 6 attendees. [x.com/chandru2win/status/2074949092845965375]
+
+PRODUCTS / PROTOTYPES NAMED AS BUILT BY COMMUNITY MEMBERS (exact quotes)
+- **scene_044** (@scene_044) — built by Hemapriya Ulaganathan & G Akshaya Sri, started at "Women Who Build #1," launched publicly. Celebrated in the Edition 13 post. [instagram.com/p/DdPIOORBLfV/, instagram.com/reel/DdkBMMJTTU_/]
+- **AI Outreach Manager prototype** — built by Elanchezhiyan Ragavan at a Build & Blend session, returned next edition "to make it better." [instagram.com/p/DdPIOORBLfV/]
+- **Parent to-do app** — built by Sivanesan at Edition 11, using Claude, with a baby sleep-tracking feature for family members. [instagram.com/reel/Dc808CLISSF/]
+- **"Jev"** — an experiment shown by a community member named Hari, discussed at Edition 14. Exact nature not confirmed beyond "experiment around X & LinkedIn." [instagram.com/p/Ddo2Fc2Aelu/]
+- Namma Kuppai itself was discussed as a live in-progress project at Edition 14. [instagram.com/p/Ddo2Fc2Aelu/]
+
+SUB-PROGRAM: "WOMEN WHY BUILD" (sic — verify exact name: "Women Who Build")
+- Edition #1 held Sept 14, 2026 (per page summary, not full-verbatim). Rationale stated: founder noticed not enough women at Chennai buildathons. [instagram.com/p/DdRxDRYAdDt/]
+- Participants built prototypes, pitched to buyers, generated ₹4,300 combined revenue. Stated philosophy: "Build → find users → sell → grow. 0 → 1 → many." [instagram.com/p/DdRxDRYAdDt/]
+- Attendee testimonial (not Chandru — a participant, Janaki Maya): "It was refreshing to be in a room full of women building, experimenting, learning and turning ideas into something real." [instagram.com/janakimaya/reel/Dc_MIX2R9MP/]
+
+OTHER EVENT: "AGENTCRAFT"
+- Chennai event, Sept 19, 2026, partnered session described as "Craft your idea with fwds/ash." No independent confirmation found beyond the Instagram post itself. [instagram.com/p/DdcBsd8hXpH/]
+
+VENUES CONFIRMED SO FAR (multiple, not just one)
+- Madras Adda, Mylapore (Ed. 15)
+- Love Hope HQ, Adyar (Ed. 14)
+- Time Café, Nungambakkam (Ed. 12)
+- Third Wave Coffee, Adyar (Ed. 1)
+- Become, design consultancy (separate AI Product Showcase event, June 2026)
+
+NOT FOUND
+- No official website (doingthingsai.com or similar) found.
+- No LinkedIn company page found.
+- No standalone Twitter/X account found (only founder's personal @chandru2win).
+- No Linktree confirmed.
+- No founding date stated anywhere found.
+- No total member count stated anywhere found. (Sticky-note figures "40-200" and "2000+" NOT corroborated by any found source — Instagram shows 180 followers, individual events run ~8 people. Flag as unresolved conflict, do not assume which is correct. "40-200" may mean per-event range across all series, "2000+" may mean lifetime reach/impressions — not confirmed, ask Chandru.)
+- Named products now confirmed — see BUILD & BLEND EDITIONS section above (scene_044, AI Outreach Manager prototype, parent to-do app, Jev, Namma Kuppai).
+- No sponsor/partner "brand" names found (logos-of-companies sense) — but venue/space partners are confirmed (see VENUES section above), which may be what "Brands we work with" was meant to cover.
+- Instagram post count not visible via fetch.
+
+=== NAMMAKUPPAI ===
+Site: nammakuppai.in
+
+WHAT IT IS
+- Self-described: "Chennai's Civic Accountability Platform" / "Chennai's Civic Issue Reporting & Accountability Platform." [nammakuppai.in page metadata]
+- Function per own meta description: report garbage anonymously; publicly names the responsible Ward Councillor, MLA, and MP. [nammakuppai.in]
+- Stated coverage: 318 wards — GCC (Greater Chennai Corporation), Avadi, Tambaram. [nammakuppai.in]
+- Site language: Tamil (lang="ta", locale ta_IN). [nammakuppai.in]
+- X/Twitter handle in site metadata: @nammakuppai. [nammakuppai.in]
+
+NOT FOUND
+- Founding/launch date — not stated in fetchable metadata.
+- Team members beyond Chandrasekar Jayapalan.
+- Funding/investment facts.
+- User/adoption metrics (users, reports filed, downloads).
+- App store listing.
+- Press/media coverage.
+- Full page body (About/Team/Contact) — site is a JS single-page app; only the empty HTML shell + head metadata was retrievable by fetch, not the rendered body.
+
+CROSS-CHECK NOTE
+- LinkedIn search snippet lists Chandrasekar Jayapalan as Founder of NammaKuppai, 101InspiringHQ, and DoingThingsAIHQ, described as a full-stack marketer, 11–12 yrs experience (11 in one snippet, 12 in another — minor snippet inconsistency, not resolved).
