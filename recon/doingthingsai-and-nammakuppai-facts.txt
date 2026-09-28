@@ -41,7 +41,13 @@ SUB-PROGRAM: "WOMEN WHY BUILD" (sic — verify exact name: "Women Who Build")
 - Attendee testimonial (not Chandru — a participant, Janaki Maya): "It was refreshing to be in a room full of women building, experimenting, learning and turning ideas into something real." [instagram.com/janakimaya/reel/Dc_MIX2R9MP/]
 
 OTHER EVENT: "AGENTCRAFT"
-- Chennai event, Sept 19, 2026, partnered session described as "Craft your idea with fwds/ash." No independent confirmation found beyond the Instagram post itself. [instagram.com/p/DdcBsd8hXpH/]
+- One-day AI agent-builders event, Sept 19, 2026, Chennai, 10am-5pm, hosted at House of Cyces. DoingThingsAI credited as "Community Partner." [instagram.com/doingthingsai/, instagram.com/p/DdcBsd8hXpH/]
+
+LUMA PROFILE
+- luma.com/user/DoingThingsAI, joined June 2026, shows "18 Hosted" events total — confirms more events exist than the numbered editions found via Instagram search; full list not accessible without Luma login. [luma.com/user/DoingThingsAI]
+
+STATED INSPIRATION (not a partner/collaborator)
+- Build & Blend format described as inspired by a Bengaluru community's AI-builder sessions (search-derived reference to "AI Learn Circle" — original source tweet returned HTTP 402, not independently re-verified). [x.com/chandru2win/status/2074949092845965375]
 
 VENUES CONFIRMED SO FAR (multiple, not just one)
 - Madras Adda, Mylapore (Ed. 15)
@@ -49,6 +55,7 @@ VENUES CONFIRMED SO FAR (multiple, not just one)
 - Time Café, Nungambakkam (Ed. 12)
 - Third Wave Coffee, Adyar (Ed. 1)
 - Become, design consultancy (separate AI Product Showcase event, June 2026)
+- House of Cyces (AgentCraft event, Sept 19 2026 — DoingThingsAI as Community Partner, not host)
 
 NOT FOUND
 - No official website (doingthingsai.com or similar) found.
