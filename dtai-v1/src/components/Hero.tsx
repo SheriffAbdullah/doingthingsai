@@ -42,7 +42,7 @@ export default function Hero() {
     <section
       id="top"
       aria-labelledby="hero-title"
-      className="on-ink relative isolate bg-ink text-paper"
+      className="on-ink relative isolate overflow-x-clip bg-ink text-paper"
       onPointerMove={onMove}
       onPointerLeave={onLeave}
     >
@@ -54,7 +54,7 @@ export default function Hero() {
       </div>
 
       <div className="container-site grid items-end gap-10 pb-16 pt-[calc(var(--nav-h)+var(--stage-top))] lg:grid-cols-12 lg:gap-8 lg:pb-24 lg:pt-[calc(var(--nav-h)+var(--stage-top-lg))]">
-        <div className="lg:col-span-7">
+        <div className="hero-pool lg:col-span-7">
           <h1 id="hero-title" className="display-xl rise max-w-[11ch]">
             For people who <span className="text-orange">actually</span> build with AI.
           </h1>

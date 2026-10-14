@@ -238,6 +238,21 @@
     .riso-plate { transition: transform 380ms var(--ease-out); will-change: transform; }
   }
 
+  /* Legibility pool: a soft ink ellipse behind the headline and intro, so the print can
+     run at full strength around them (the orange word needs it over the bright curtains). */
+  .hero-pool { position: relative; }
+  .hero-pool::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    inset: -22% -20% -8% -20%;
+    background: radial-gradient(closest-side, rgb(var(--ink) / 0.9) 0%, rgb(var(--ink) / 0.78) 50%, rgb(var(--ink) / 0) 100%);
+  }
+  @media (min-width: 1024px) {
+    .hero-pool::before { inset: -22% -18% -20% -30%; }
+  }
+
   /* Hero stage scrim: keeps copy and nav legible over the print. */
   .hero-scrim {
     background: linear-gradient(180deg, rgb(var(--ink) / 0.7) 0%, rgb(var(--ink) / 0.4) 22%, rgb(var(--ink) / 0.9) 55%, rgb(var(--ink)) 100%);
