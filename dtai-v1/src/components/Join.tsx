@@ -90,14 +90,14 @@ export default function Join() {
   return (
     <section id="join" aria-labelledby="join-title" className="bg-paper-2 section-pad">
       <div className="container-site">
-        <Reveal className="grid overflow-hidden rounded-2xl bg-ink text-paper on-ink lg:grid-cols-12">
-          <div className="p-8 md:p-12 lg:col-span-5 lg:p-14">
+        <Reveal className="grid overflow-hidden rounded-2xl bg-paper lg:grid-cols-12">
+          <div className="on-ink bg-ink p-6 text-paper md:p-12 lg:col-span-5 lg:p-14">
             <h2 id="join-title" className="display-lg">
               Pull up a chair. <span className="text-orange">Bring a laptop.</span>
             </h2>
           </div>
 
-          <div className="bg-paper p-8 text-ink md:p-12 lg:col-span-7 lg:p-14">
+          <div className="p-6 text-ink md:p-12 lg:col-span-7 lg:p-14">
             {status === 'sent' ? (
               <div role="status" aria-live="polite" className="flex h-full flex-col justify-center">
                 <h3 className="display-md">Now hit send in WhatsApp.</h3>
