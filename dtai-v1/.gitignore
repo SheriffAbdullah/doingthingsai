@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Review screenshots and Lighthouse reports (generated, not source)
+.screenshots
