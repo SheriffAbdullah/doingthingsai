@@ -1,139 +1,155 @@
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ArrowUpRight } from 'lucide-react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { CTA_LABEL, LUMA_EVENT_URL, NAV_LINKS } from '../data/site'
+import { ArrowUpRight } from './ui/Icons'
+import Wordmark from './ui/Wordmark'
 
-const links = [
-  { label: 'Products', href: '#products' },
-  { label: 'Build in Public', href: '#build-in-public' },
-  { label: 'Events', href: '#events' },
-  { label: 'People', href: '#people' },
-  { label: 'Mission', href: '#mission' },
-  { label: 'Contact', href: '#contact' },
-]
+function Logo() {
+  return (
+    <a href="#top" className="flex min-h-[44px] items-center gap-2 rounded-md text-ink no-underline" aria-label="Doing Things AI, back to top">
+      <Wordmark />
+    </a>
+  )
+}
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const sheetRef = useRef<HTMLDivElement>(null)
+  const openerRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll)
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const close = useCallback(() => {
+    setOpen(false)
+    openerRef.current?.focus()
+  }, [])
+
+  // Lock scroll, trap focus, close on Escape while the sheet is open.
+  useEffect(() => {
+    if (!open) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const focusables = () =>
+      Array.from(sheetRef.current?.querySelectorAll<HTMLElement>('a[href], button') ?? [])
+    focusables()[0]?.focus()
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { e.preventDefault(); close() }
+      if (e.key === 'Tab') {
+        const els = focusables()
+        if (!els.length) return
+        const first = els[0], last = els[els.length - 1]
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus() }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus() }
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => { document.body.style.overflow = prev; document.removeEventListener('keydown', onKey) }
+  }, [open, close])
+
+  // Close the sheet if the viewport grows past the mobile breakpoint.
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)')
+    const onChange = () => { if (mq.matches) setOpen(false) }
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
   }, [])
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? 'bg-bg-light/90 backdrop-blur-md border-b border-navy/10 shadow-sm'
-            : 'bg-transparent'
-        }`}
+        className={`fixed inset-x-0 top-0 z-50 bg-paper transition-shadow duration-base ${scrolled ? 'nav-scrolled' : ''}`}
       >
-        <div className="site-container flex items-center justify-between h-16">
-          {/* Logo */}
-          <a href="#" className="flex items-center gap-2 no-underline">
-            <span className="font-display font-800 text-navy text-xl leading-none tracking-tight">
-              Doing<span className="text-accent">Things</span>AI
-            </span>
-          </a>
+        <div className="container-site flex items-center justify-between" style={{ height: 'var(--nav-h)' }}>
+          <Logo />
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-7">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="font-body text-sm font-normal text-navy/80 no-underline hover:text-accent transition-colors duration-200"
-              >
-                {l.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* CTA Pair */}
-          <div className="hidden md:flex items-center gap-2">
-            <a
-              href="https://luma.com/00dhanbk"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-body text-sm font-semibold text-cream bg-navy px-5 py-2.5 rounded-pill no-underline hover:bg-navy-mid transition-colors duration-200"
-            >
-              Join the Build
-            </a>
-            <a
-              href="https://luma.com/00dhanbk"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-11 h-11 rounded-full bg-accent flex items-center justify-center hover:scale-110 transition-transform duration-200 group"
-            >
-              <ArrowUpRight size={18} className="text-white group-hover:rotate-12 transition-transform duration-200" />
-            </a>
-          </div>
-
-          {/* Hamburger */}
-          <button
-            className="md:hidden p-3 -mr-1 text-navy"
-            onClick={() => setOpen(true)}
-            aria-label="Open menu"
-          >
-            <Menu size={22} />
-          </button>
-        </div>
-      </header>
-
-      {/* Mobile Drawer */}
-      <AnimatePresence>
-        {open && (
-          <>
-            <motion.div
-              className="fixed inset-0 bg-navy/40 z-50 md:hidden"
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              onClick={() => setOpen(false)}
-            />
-            <motion.div
-              className="fixed top-0 right-0 bottom-0 w-72 bg-bg-light z-50 flex flex-col p-6 md:hidden"
-              initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
-              transition={{ type: 'spring', stiffness: 320, damping: 32 }}
-            >
-              <button className="self-end mb-8 p-3 -mr-1 text-navy" onClick={() => setOpen(false)}>
-                <X size={22} />
-              </button>
-              <nav className="flex flex-col gap-6">
-                {links.map((l) => (
+          <nav aria-label="Primary" className="hidden md:block">
+            <ul className="flex items-center gap-1">
+              {NAV_LINKS.map((l) => (
+                <li key={l.href}>
                   <a
-                    key={l.href}
                     href={l.href}
-                    onClick={() => setOpen(false)}
-                    className="font-display text-2xl font-bold text-navy no-underline hover:text-accent transition-colors"
+                    className="inline-flex min-h-[44px] items-center rounded-md px-3 text-ui font-medium text-ink/70 no-underline transition-colors duration-fast hover:bg-ink/[0.06] hover:text-ink"
                   >
                     {l.label}
                   </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <a
+              href={LUMA_EVENT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary btn-sm hidden sm:inline-flex"
+            >
+              {CTA_LABEL}
+              <ArrowUpRight size={15} />
+            </a>
+            <button
+              ref={openerRef}
+              type="button"
+              className="md:hidden grid h-11 w-11 place-items-center rounded-md text-ink hover:bg-ink/[0.06]"
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              onClick={() => (open ? close() : setOpen(true))}
+            >
+              <span className="relative block h-4 w-5" aria-hidden="true">
+                <span className={`absolute left-0 top-0 h-0.5 w-5 bg-current transition-transform duration-base ease-out ${open ? 'translate-y-[7px] rotate-45' : ''}`} />
+                <span className={`absolute left-0 top-[7px] h-0.5 w-5 bg-current transition-opacity duration-fast ${open ? 'opacity-0' : ''}`} />
+                <span className={`absolute left-0 top-[14px] h-0.5 w-5 bg-current transition-transform duration-base ease-out ${open ? '-translate-y-[7px] -rotate-45' : ''}`} />
+              </span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {open && (
+          <div
+            id="mobile-menu"
+            ref={sheetRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+            className="sheet-in fixed inset-x-0 bottom-0 z-40 flex flex-col bg-paper md:hidden"
+            style={{ top: 'var(--nav-h)' }}
+          >
+            <nav aria-label="Primary mobile" className="container-site flex-1 overflow-y-auto border-t hairline pt-2">
+              <ul>
+                {NAV_LINKS.map((l) => (
+                  <li key={l.href} className="border-b hairline">
+                    <a
+                      href={l.href}
+                      onClick={() => setOpen(false)}
+                      className="flex min-h-[64px] items-center py-3 font-display text-[2rem] font-bold tracking-[-0.03em] text-ink no-underline"
+                    >
+                      {l.label}
+                    </a>
+                  </li>
                 ))}
-              </nav>
-              <div className="mt-auto flex gap-3">
-                <a
-                  href="https://luma.com/00dhanbk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setOpen(false)}
-                  className="flex-1 text-center font-body text-sm font-semibold text-cream bg-navy px-5 py-3.5 rounded-pill no-underline"
-                >
-                  Join the Build
-                </a>
-                <a
-                  href="https://luma.com/00dhanbk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-full bg-accent flex items-center justify-center"
-                >
-                  <ArrowUpRight size={18} className="text-white" />
-                </a>
-              </div>
-            </motion.div>
-          </>
+              </ul>
+            </nav>
+            <div className="container-site py-5">
+              <a
+                href={LUMA_EVENT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="btn btn-primary btn-lg w-full"
+              >
+                {CTA_LABEL}
+                <ArrowUpRight size={16} />
+              </a>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
     </>
   )
 }

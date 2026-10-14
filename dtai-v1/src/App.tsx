@@ -1,48 +1,28 @@
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import SuccessStories from './components/SuccessStories'
-import BuildInPublic from './components/BuildInPublic'
-import Collaborators from './components/Collaborators'
-import Events from './components/Events'
-import Builders from './components/Builders'
-import Mission from './components/Mission'
-import CollaborateForm from './components/CollaborateForm'
+import Builds from './components/Builds'
+import Room from './components/Room'
+import Nights from './components/Nights'
+import People from './components/People'
 import FAQ from './components/FAQ'
+import Join from './components/Join'
 import Footer from './components/Footer'
 
 export default function App() {
   return (
-    <div className="font-body">
+    <>
+      <a href="#main" className="skip-link">Skip to content</a>
       <Navbar />
-      <main>
-        {/* 1. Hero */}
+      <main id="main">
         <Hero />
-
-        {/* 2. Success Stories — dark section */}
-        <SuccessStories />
-
-        {/* 3. Build in Public — light section */}
-        <BuildInPublic />
-
-        {/* 4. Collaborators — dark section */}
-        <Collaborators />
-
-        {/* 5. Events — light section */}
-        <Events />
-
-        {/* 6. Builders/People — dark section */}
-        <Builders />
-
-        {/* 7. Mission — light section */}
-        <Mission />
-
-        {/* 8. FAQ — light section */}
+        <Builds />
+        <Room />
+        <Nights />
+        <People />
         <FAQ />
-
-        {/* 9. Contact/Collaborate — dark section */}
-        <CollaborateForm />
+        <Join />
       </main>
       <Footer />
-    </div>
+    </>
   )
 }

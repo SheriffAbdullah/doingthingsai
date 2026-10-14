@@ -1,177 +1,295 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import '@fontsource-variable/bricolage-grotesque';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Base resets ─────────────────────────────────────────── */
+/* ─── Tokens ─────────────────────────────────────────────── */
+:root {
+  --paper: 244 239 230;      /* #F4EFE6 */
+  --paper-2: 235 228 216;    /* #EBE4D8 */
+  --ink: 21 19 15;           /* #15130F */
+  --ink-2: 33 30 25;         /* #211E19 */
+  --orange: 240 88 31;       /* #F0581F */
+  --orange-hi: 255 106 47;   /* #FF6A2F, primary button hover */
+  --orange-deep: 185 64 12;  /* #B9400C */
+  --blue: 36 87 214;         /* #2457D6 */
+
+  /* Hairlines: decorative rules. Field borders use --line-strong (3:1 on paper). */
+  --line: 0.14;
+  --line-strong: 0.5;
+
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast: 200ms;   /* hovers, colour, small transforms */
+  --dur-base: 300ms;   /* accordion, menu icon, shadows */
+  --dur-slow: 500ms;   /* scroll reveals */
+
+  --shadow-lift: 0 30px 60px -20px rgb(0 0 0 / 0.6);
+  --shadow-lift-hover: 0 36px 70px -20px rgb(0 0 0 / 0.7);
+  --nav-h: 64px;
+}
+
+/* ─── Base ───────────────────────────────────────────────── */
 @layer base {
-
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
   html {
-    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--nav-h) + 12px);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
-    max-width: 100%;
+    text-size-adjust: 100%;
   }
-
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
   body {
-    background-color: #F2F0ED;
-    color: #0E1A2B;
-    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-size: 1rem;
-    line-height: 1.5;
-    letter-spacing: -0.01px;
+    @apply bg-paper text-ink font-body;
+    font-size: 1.0625rem; /* 17px */
+    line-height: 1.55;
     margin: 0;
-    overflow-x: hidden;
-    max-width: 100%;
-    font-feature-settings: "calt" 0, "liga" 0, "ss03", "cv01", "cv10", "zero" 0;
+    overflow-x: clip;
+    font-feature-settings: 'cv11', 'ss01';
   }
+  img { display: block; max-width: 100%; height: auto; }
+  ::selection { background: rgb(var(--orange)); color: rgb(var(--ink)); }
 
-  ::selection {
-    background-color: #F05A28;
-    color: #F9F9F9;
+  :focus-visible {
+    outline: 2px solid rgb(var(--blue));
+    outline-offset: 3px;
+    border-radius: 2px;
   }
+  .on-ink :focus-visible { outline-color: rgb(var(--orange)); }
 
-  img {
-    max-width: 100%;
-    display: block;
-  }
+  h1, h2, h3, h4 { @apply font-display; text-wrap: balance; }
+  p { text-wrap: pretty; }
 }
 
-/* ─── Utility classes ─────────────────────────────────────── */
-@layer utilities {
-
-  /* Container */
-  .site-container {
+/* ─── Components ─────────────────────────────────────────── */
+@layer components {
+  .container-site {
+    width: 100%;
     max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: clamp(1rem, 4vw, 3rem);
-    padding-right: clamp(1rem, 4vw, 3rem);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 3rem);
   }
+  .section-pad { padding-block: clamp(4.5rem, 9vw, 8rem); }
 
-  /* Section spacing */
-  .section-py {
-    padding-top: clamp(4rem, 7vw, 6rem);
-    padding-bottom: clamp(4rem, 7vw, 6rem);
+  .display-xl {
+    @apply font-display font-extrabold;
+    font-size: clamp(2.6rem, 7vw, 6rem);
+    line-height: 0.96;
+    letter-spacing: -0.035em;
   }
-
-  .section-py-sm {
-    padding-top: clamp(2.5rem, 5vw, 4rem);
-    padding-bottom: clamp(2.5rem, 5vw, 4rem);
-  }
-
-  .section-py-lg {
-    padding-top: clamp(5rem, 9vw, 8rem);
-    padding-bottom: clamp(5rem, 9vw, 8rem);
-  }
-
-  /* Fluid text — Inter with Brex aggressive negative tracking */
-  .text-display {
-    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    font-size: clamp(2.8rem, 7vw, 4.5rem);
-    font-weight: 600;
-    line-height: 1.0;
+  .display-lg {
+    @apply font-display font-extrabold;
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    line-height: 1;
     letter-spacing: -0.03em;
-    font-feature-settings: "calt" 0, "liga" 0, "ss03", "cv01", "cv10", "zero" 0;
   }
-
-  .text-h1 {
-    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    font-size: clamp(2.2rem, 5vw, 3rem);
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.025em;
-    font-feature-settings: "calt" 0, "liga" 0, "ss03", "cv01", "cv10", "zero" 0;
+  .display-md {
+    @apply font-display font-bold;
+    font-size: clamp(1.5rem, 2.6vw, 2.125rem);
+    line-height: 1.08;
+    letter-spacing: -0.022em;
   }
-
-  .text-h2 {
-    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    font-size: clamp(1.5rem, 3vw, 2.25rem);
-    font-weight: 600;
-    line-height: 1.21;
-    letter-spacing: -0.02em;
-    font-feature-settings: "calt" 0, "liga" 0, "ss03", "cv01", "cv10", "zero" 0;
+  .display-sm {
+    @apply font-display font-bold;
+    font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
   }
-
-  .text-h3 {
-    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
-    font-weight: 600;
-    line-height: 1.33;
-    letter-spacing: -0.01em;
-    font-feature-settings: "calt" 0, "liga" 0, "ss03", "cv01", "cv10", "zero" 0;
+  .lede {
+    font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
+    line-height: 1.5;
+    max-width: 58ch;
   }
-
-  /* Tag badge — Brex 6px radius chip style */
-  .pill-tag {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px 12px;
-    border: 1px solid rgba(14, 26, 43, 0.2);
-    border-radius: 6px;
-    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  .meta {
+    @apply font-mono uppercase;
     font-size: 0.75rem;
+    letter-spacing: 0.08em;
     font-weight: 500;
-    letter-spacing: -0.01px;
-    color: #0E1A2B;
-    background: transparent;
-    margin-bottom: 1rem;
-    font-feature-settings: "calt" 0, "liga" 0;
+  }
+  /* Buttons — one primary, one quiet, one on-ink */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 font-body font-semibold rounded-lg select-none;
+    min-height: 48px;
+    padding-inline: 1.375rem;
+    @apply text-ui;
+    line-height: 1;
+    text-decoration: none;
+    transition-property: transform, background-color, color, border-color, box-shadow;
+    transition-duration: var(--dur-fast);
+    transition-timing-function: var(--ease-out);
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary {
+    @apply bg-orange text-ink;
+    box-shadow: 0 1px 0 rgb(var(--ink) / 0.25) inset, 0 0 0 1px rgb(var(--ink) / 0.08);
+  }
+  .btn-primary:hover { background: rgb(var(--orange-hi)); transform: translateY(-1px); box-shadow: 0 6px 18px -6px rgb(var(--orange) / 0.7); }
+  .btn-quiet {
+    @apply text-ink border border-ink/30 bg-transparent;
+  }
+  .btn-quiet:hover { @apply border-ink bg-ink text-paper; }
+  /* Every size keeps a 44px+ target. */
+  .btn-sm { min-height: 44px; padding-inline: 1rem; font-size: 0.875rem; }
+  .btn-lg { padding-inline: 1.75rem; font-size: 1rem; }
+
+  .link-arrow {
+    @apply inline-flex items-center gap-1.5 font-semibold underline underline-offset-4 decoration-1;
+    text-decoration-color: rgb(var(--ink) / 0.3);
+    transition: text-decoration-color var(--dur-fast) var(--ease-out);
+  }
+  .link-arrow:hover { text-decoration-color: currentColor; }
+  .link-arrow svg { transition: transform var(--dur-fast) var(--ease-out); }
+  .on-ink .link-arrow { text-decoration-color: rgb(var(--paper) / 0.3); }
+  .on-ink .link-arrow:hover { text-decoration-color: currentColor; }
+  .link-arrow:hover svg { transform: translate(2px, -2px); }
+
+  /* Edition stamp */
+  .stamp {
+    @apply font-mono font-bold uppercase inline-flex items-center justify-center;
+    letter-spacing: 0.06em;
+    border: 2px solid currentColor;
+    border-radius: 6px;
+    padding: 0.2em 0.5em;
+    line-height: 1;
+    transform: rotate(-6deg);
   }
 
-  .pill-tag-dark {
-    border-color: rgba(249, 249, 249, 0.25);
-    color: #F9F9F9;
-  }
+  .hairline { border-color: rgb(var(--ink) / var(--line)); }
+  .on-ink .hairline { border-color: rgb(var(--paper) / var(--line)); }
+  .nav-scrolled { box-shadow: 0 1px 0 rgb(var(--ink) / var(--line)); }
 
-  /* Accent text span */
-  .accent-text {
-    color: #F05A28;
+  /* The hero ticket: paper card lifted off the ink. */
+  .ticket-card {
+    box-shadow: var(--shadow-lift), 0 0 0 1px rgb(var(--paper) / 0.12);
   }
+  .ticket-card:hover { box-shadow: var(--shadow-lift-hover), 0 0 0 1px rgb(var(--paper) / 0.2); }
 
-  /* Fade-up animation */
-  .fade-up-init {
-    opacity: 0;
-    transform: translateY(28px);
+  /* Photo treatment: consistent corner, subtle ink edge */
+  .photo {
+    @apply rounded-lg overflow-hidden bg-paper-2;
+    box-shadow: 0 0 0 1px rgb(var(--ink) / 0.08);
   }
+  .on-ink .photo { box-shadow: 0 0 0 1px rgb(var(--paper) / 0.1); }
 
-  .fade-up-visible {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.65s cubic-bezier(0.19, 1, 0.22, 1),
-      transform 0.65s cubic-bezier(0.19, 1, 0.22, 1);
+  /* Ticket perforation */
+  .perf {
+    position: relative;
+    height: 0;
+    border-top: 2px dashed rgb(var(--ink) / 0.25); /* dashes read lighter than a solid rule */
   }
-
-  /* Prevent sections from leaking content horizontally (Framer Motion x-translate overflow) */
-  section {
-    overflow-x: hidden;
+  /* Notches sit centred on the card edge; the card clips the outer half. */
+  .perf::before, .perf::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    width: 22px; height: 22px;
+    border-radius: 999px;
+    background: rgb(var(--ink));
   }
+  .perf::before { left: -27px; }
+  .perf::after { right: -27px; }
 
-  /* Marquee pause on hover */
-  .marquee-track:hover .animate-marquee,
-  .marquee-track:hover .animate-marquee2 {
-    animation-play-state: paused;
+  /* Form fields */
+  .field {
+    @apply w-full rounded-lg border bg-paper px-4 text-ink font-body;
+    border-color: rgb(var(--ink) / var(--line-strong));
+    min-height: 48px;
+    font-size: 1rem;
+    transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  }
+  .field:hover { border-color: rgb(var(--ink) / 0.75); }
+  .field:focus { outline: none; border-color: rgb(var(--blue)); box-shadow: 0 0 0 3px rgb(var(--blue) / 0.2); }
+  .field[aria-invalid='true'] { border-color: rgb(var(--orange-deep)); }
+  .field[aria-invalid='true']:focus { box-shadow: 0 0 0 3px rgb(var(--orange) / 0.25); }
+  textarea.field { padding-block: 0.8rem; min-height: 8rem; resize: vertical; }
+  select.field {
+    appearance: none;
+    /* Data URIs can't read CSS variables: %2315130F is --ink. */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2315130F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    padding-right: 2.75rem;
   }
 }
 
-/* ─── Scrollbar ───────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 6px;
+/* ─── Motion: reveals, hero entrance, ticket ────────────── */
+/* Hidden only once JS is confirmed running (html.js); the prerendered page is fully visible without it. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+}
+.js .reveal.is-in { opacity: 1; transform: none; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+.rise { animation: rise 600ms var(--ease-out) both; }
+
+@keyframes ticket-in {
+  from { opacity: 0; transform: translateY(28px) rotate(-5deg); }
+  to { opacity: 1; transform: translateY(0) rotate(-1.5deg); }
+}
+.ticket-in { animation: ticket-in 700ms var(--ease-out) 250ms both; }
+
+@keyframes stamp-in {
+  from { opacity: 0; transform: scale(1.6) rotate(-14deg); }
+  to { opacity: 1; transform: scale(1) rotate(-6deg); }
+}
+.stamp-in { animation: stamp-in 350ms var(--ease-out) 900ms both; }
+
+/* Pointer tilt: --rx/--ry are set from JS on pointermove, transform-only. */
+.tilt {
+  transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  transform-style: preserve-3d;
 }
 
-::-webkit-scrollbar-track {
-  background: #F2F0ED;
+/* Accordion: grid-rows trick, no JS height measuring. */
+.acc-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-base) var(--ease-out);
+}
+.acc-panel[data-open='true'] { grid-template-rows: 1fr; }
+.acc-panel > div { overflow: hidden; min-height: 0; }
+
+@keyframes sheet-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+.sheet-in { animation: sheet-in var(--dur-fast) var(--ease-out) both; }
+
+/* ─── Motion preferences ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .js .reveal { opacity: 1; transform: none; }
+  .rise, .sheet-in { animation: none; }
+  .ticket-in { animation: none; transform: rotate(-1.5deg); }
+  .stamp-in { animation: none; }
+  .tilt { transform: none !important; }
 }
 
-::-webkit-scrollbar-thumb {
-  background: #0E1A2B;
-  border-radius: 3px;
+/* ─── Skip link ──────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  left: 1rem; top: -100px;
+  z-index: 100;
+  @apply btn btn-primary;
+}
+.skip-link:focus { top: 0.75rem; }
+
+/* ─── Scrollbar (desktop) ───────────────────────────────── */
+@media (hover: hover) {
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: rgb(var(--paper-2)); }
+  ::-webkit-scrollbar-thumb { background: rgb(var(--ink) / 0.5); border-radius: 999px; border: 2px solid rgb(var(--paper-2)); }
 }

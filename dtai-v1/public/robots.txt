@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://doing-things-ai.vercel.app/sitemap.xml
