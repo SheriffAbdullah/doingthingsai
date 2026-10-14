@@ -42,7 +42,7 @@ export default function FAQ() {
         <Reveal as="h2" id="faq-title" className="display-lg lg:col-span-4">
           Questions.
         </Reveal>
-        <Reveal as="ul" className="border-t hairline lg:col-span-8" delay={0.05}>
+        <Reveal as="ul" stagger className="border-t hairline lg:col-span-8">
           {faqs.map((f, i) => (
             <Item key={f.q} q={f.q} a={f.a} open={open === i} onToggle={() => setOpen(open === i ? null : i)} />
           ))}

@@ -1,15 +1,17 @@
 import { people } from '../data/people'
 import Reveal from './ui/Reveal'
+import Tear from './ui/Tear'
 
 export default function People() {
   return (
-    <section id="people" aria-labelledby="people-title" className="bg-paper section-pad">
+    <section id="people" aria-labelledby="people-title" className="relative bg-paper section-pad">
+      <Tear from="ink" />
       <div className="container-site">
         <Reveal as="h2" id="people-title" className="display-lg">
           Run by builders.
         </Reveal>
 
-        <Reveal as="ul" className="mt-16 grid grid-cols-2 gap-x-4 gap-y-10 md:max-w-3xl md:gap-x-10" delay={0.05}>
+        <Reveal as="ul" stagger className="mt-16 grid grid-cols-2 gap-x-4 gap-y-10 md:max-w-3xl md:gap-x-10">
           {people.map((p) => (
             <li key={p.name}>
               <div className="photo aspect-[4/5]">
