@@ -19,7 +19,7 @@ export const heroPhoto: Photo = {
   alt: 'Five builders working on laptops around a long wooden table in a brick-walled Chennai café at night',
 }
 
-/** Order matters: the first is the large tile in the grid. */
+/** Order matters: the first is the panorama behind the Room headline, the rest form the strip. */
 export const roomPhotos: Photo[] = [
   { src: p7, width: 900, height: 675, alt: 'Builders around a boardroom table, one presenting from a laptop' },
   { src: build14, width: 800, height: 600, alt: 'People at a white table with laptops in a small meeting room' },

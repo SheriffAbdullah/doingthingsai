@@ -1,39 +1,57 @@
-import { INSTAGRAM_URL, LINKEDIN_URL, WHATSAPP_URL, X_URL } from '../data/site'
-import { InstagramIcon, LinkedInIcon, WhatsAppIcon, XIcon } from './ui/Icons'
+import { INSTAGRAM_URL, LINKEDIN_URL, LUMA_PROFILE_URL, WHATSAPP_DISPLAY, WHATSAPP_URL, X_URL } from '../data/site'
 import Wordmark from './ui/Wordmark'
 
-const socials = [
-  { label: 'Instagram', href: INSTAGRAM_URL, Icon: InstagramIcon },
-  { label: 'WhatsApp', href: WHATSAPP_URL, Icon: WhatsAppIcon },
-  { label: 'LinkedIn', href: LINKEDIN_URL, Icon: LinkedInIcon },
-  { label: 'X', href: X_URL, Icon: XIcon },
+const ledger = [
+  {
+    title: 'Chennai',
+    links: [
+      { label: WHATSAPP_DISPLAY, href: WHATSAPP_URL },
+      { label: 'Luma', href: LUMA_PROFILE_URL },
+    ],
+  },
+  {
+    title: 'Follow',
+    links: [
+      { label: 'Instagram', href: INSTAGRAM_URL },
+      { label: 'LinkedIn', href: LINKEDIN_URL },
+      { label: 'X', href: X_URL },
+    ],
+  },
 ]
 
+/** Big wordmark sign-off with the address ledger beneath. */
 export default function Footer() {
   return (
     <footer className="on-ink bg-ink text-paper">
-      <div className="container-site flex flex-col gap-8 py-12 md:flex-row md:items-center md:justify-between">
-        <p className="flex items-center gap-2">
-          <Wordmark />
-        </p>
-        <ul className="-ml-3 flex flex-wrap gap-1 md:-mr-3 md:ml-0">
-          {socials.map(({ label, href, Icon }) => (
-            <li key={label}>
-              <a
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="grid h-11 w-11 place-items-center rounded-md text-paper/70 transition-colors duration-fast hover:bg-paper/10 hover:text-paper"
-              >
-                <Icon size={18} />
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
       <div className="container-site">
-        <p className="border-t hairline py-6 text-sm text-paper/60">© {new Date().getFullYear()} Doing Things AI, Chennai</p>
+        <p className="border-t hairline pt-12 md:pt-16">
+          <Wordmark size="xl" />
+        </p>
+
+        <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 border-t hairline py-8 md:mt-14 md:grid-cols-[1.4fr_1fr_1fr] md:py-10">
+          <p className="order-last col-span-2 self-end text-sm text-paper/60 md:order-none md:col-span-1">
+            © {new Date().getFullYear()} Doing Things AI, Chennai
+          </p>
+          {ledger.map((col) => (
+            <div key={col.title}>
+              <h2 className="meta text-paper/60">{col.title}</h2>
+              <ul className="mt-2">
+                {col.links.map((l) => (
+                  <li key={l.href}>
+                    <a
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-[44px] items-center font-medium text-paper/80 no-underline underline-offset-4 transition-colors duration-fast hover:text-paper hover:underline"
+                    >
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
     </footer>
   )

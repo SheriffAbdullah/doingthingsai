@@ -5,7 +5,7 @@ import Wordmark from './ui/Wordmark'
 
 function Logo() {
   return (
-    <a href="#top" className="flex min-h-[44px] items-center gap-2 rounded-md text-ink no-underline" aria-label="Doing Things AI, back to top">
+    <a href="#top" className="flex min-h-[44px] items-center gap-2 rounded-md text-current no-underline" aria-label="Doing Things AI, back to top">
       <Wordmark />
     </a>
   )
@@ -14,6 +14,8 @@ function Logo() {
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  // The hero ticket is the one "Join the Build" up top; the nav button waits until it has scrolled away.
+  const [ticketGone, setTicketGone] = useState(false)
   const sheetRef = useRef<HTMLDivElement>(null)
   const openerRef = useRef<HTMLButtonElement>(null)
 
@@ -23,6 +25,20 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => {
+    const ticket = document.getElementById('hero-ticket')
+    if (!ticket || !('IntersectionObserver' in window)) { setTicketGone(true); return }
+    const navH = getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim() || '0px'
+    const io = new IntersectionObserver(([e]) => setTicketGone(!e.isIntersecting && e.boundingClientRect.top < 0), {
+      rootMargin: `-${navH} 0px 0px 0px`,
+    })
+    io.observe(ticket)
+    return () => io.disconnect()
+  }, [])
+
+  // Clear over the hero photo at the very top; paper once scrolled or while the menu is open.
+  const solid = scrolled || open
 
   const close = useCallback(() => {
     setOpen(false)
@@ -62,7 +78,9 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 bg-paper transition-shadow duration-base ${scrolled ? 'nav-scrolled' : ''}`}
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,color,box-shadow] duration-base ease-out ${
+          solid ? 'bg-paper text-ink' : 'on-ink nav-clear bg-transparent text-paper'
+        } ${scrolled ? 'nav-scrolled' : ''}`}
       >
         <div className="container-site flex items-center justify-between" style={{ height: 'var(--nav-h)' }}>
           <Logo />
@@ -73,7 +91,9 @@ export default function Navbar() {
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="inline-flex min-h-[44px] items-center rounded-md px-3 text-ui font-medium text-ink/70 no-underline transition-colors duration-fast hover:bg-ink/[0.06] hover:text-ink"
+                    className={`inline-flex min-h-[44px] items-center rounded-md px-3 text-ui font-medium no-underline transition-colors duration-fast ${
+                      solid ? 'text-ink/70 hover:bg-ink/[0.06] hover:text-ink' : 'text-paper/85 hover:bg-paper/10 hover:text-paper'
+                    }`}
                   >
                     {l.label}
                   </a>
@@ -87,7 +107,10 @@ export default function Navbar() {
               href={LUMA_EVENT_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-primary btn-sm hidden sm:inline-flex"
+              className="nav-cta btn btn-primary btn-sm hidden sm:inline-flex"
+              data-hidden={!ticketGone}
+              aria-hidden={ticketGone ? undefined : true}
+              tabIndex={ticketGone ? undefined : -1}
             >
               {CTA_LABEL}
               <ArrowUpRight size={15} />
@@ -95,7 +118,7 @@ export default function Navbar() {
             <button
               ref={openerRef}
               type="button"
-              className="md:hidden grid h-11 w-11 place-items-center rounded-md text-ink hover:bg-ink/[0.06]"
+              className={`md:hidden grid h-11 w-11 place-items-center rounded-md ${solid ? 'hover:bg-ink/[0.06]' : 'hover:bg-paper/10'}`}
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={open ? 'Close menu' : 'Open menu'}

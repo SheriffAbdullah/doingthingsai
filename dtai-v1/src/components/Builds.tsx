@@ -1,16 +1,18 @@
 import { builds } from '../data/builds'
 import { SHOW_BUILDER_NAMES } from '../data/site'
 import Reveal from './ui/Reveal'
+import Tear from './ui/Tear'
 
 export default function Builds() {
   return (
-    <section id="builds" aria-labelledby="builds-title" className="bg-paper section-pad">
+    <section id="builds" aria-labelledby="builds-title" className="relative bg-paper section-pad">
+      <Tear from="ink" />
       <div className="container-site">
         <Reveal as="h2" id="builds-title" className="display-lg">
           Shipped in the room.
         </Reveal>
 
-        <Reveal as="ol" className="mt-16 border-t hairline" delay={0.05}>
+        <Reveal as="ol" stagger className="mt-16 border-t hairline">
           {builds.map((b) => (
             <li
               key={b.name}

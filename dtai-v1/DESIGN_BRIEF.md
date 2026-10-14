@@ -9,7 +9,7 @@ Chennai founders, developers, designers, marketers, students and AI-curious prof
 The brand's edge is candour. Small rooms (6 people at Edition 1, usually ~8), real numbers (₹4,300 made at Women Who Build #1), and an explicit "we don't publish a member count" line. We lean into that instead of hiding it.
 
 ## One CTA verb
-**Join the Build** — in the nav, hero and ticket. Never "RSVP", "Register", "Sign up". The ticket and every button go to the Luma page. Secondary intent (host/partner) is a text link, visually subordinate, to the form.
+**Join the Build** — on the hero ticket (the only one in the first viewport), then in the nav once the ticket has scrolled away, and in the mobile menu. Never "RSVP", "Register", "Sign up". The ticket and every button go to the Luma page. Secondary intent (host/partner) is a text link, visually subordinate, to the form.
 
 ## Aesthetic direction: "Wednesday-night ticket"
 Chalkboard ink + café paper + one signature orange. The community's own posters are a cream signboard hung over a warm café scene, with a chalkboard line: *3 hours. Open laptops. Build. Good people.* The site borrows that: ink (chalk) sections for the night-time things (hero, timetable, mission), paper sections for the ledger of things built, the people, the FAQ. Edition numbers are used like YC batch codes, stamped in mono: `ED.17`.
@@ -29,19 +29,23 @@ Motifs: a perforated ticket stub, rubber-stamp edition numbers, hairline rules a
 - Meta: **JetBrains Mono** 500, 12–13px, uppercase, +0.08em: dates, edition stamps, labels.
 
 ## Motion language
-Ease-out `cubic-bezier(.2,.8,.2,1)`, 200–500ms, transform/opacity only. Reveals: 12px rise + fade, once, from framer-motion `whileInView`. Signature moment: the hero ticket drops in (y 24 → 0, rotate −5° → −3°) and the `ED.17` stamp thumps (scale 1.5 → 1, 350ms, 500ms delay); on pointer devices the ticket tilts ±5° toward the cursor. All of it is gated on `prefers-reduced-motion` (static ticket, no marquee, no tilt). No scroll hijacking, no WebGL.
+Ease-out `cubic-bezier(.2,.8,.2,1)`, 200–500ms, transform/opacity only. Reveals: 12px rise + fade, once, on entering view; lists rise row by row (70ms stagger). Signature moment: the hero ticket drops in (y 24 → 0, rotate −5° → −3°) and the `ED.17` stamp thumps (scale 1.5 → 1, 350ms, 500ms delay); on pointer devices the ticket tilts ±5° toward the cursor and the hero's two riso plates drift apart with it (±11px, 380ms). All of it is gated on `prefers-reduced-motion` (static ticket, fixed plate offset, no marquee, no tilt). No scroll hijacking, no WebGL.
 
 ## Section plan (single page, anchors)
 One headline per section, at most one supporting line, then the content. No eyebrows, no explainer copy.
-1. **Nav** — Builds · Nights · People · FAQ + Join the Build. Mobile: full-height sheet, focus-trapped, Escape closes.
-2. **Hero (ink)** — H1, one-line sub, CTA. Right: the next-edition ticket over a session photo.
+1. **Nav** — Builds · Nights · People · FAQ + Join the Build (hidden until the hero ticket scrolls away). Clear over the hero photo, paper once scrolled. Mobile: full-height sheet, focus-trapped, Escape closes.
+2. **Hero (ink, riso print stage)** — the session photo fills the hero as a two-plate riso misprint: an orange plate (luminance over ⅓) and a paper plate (over ⅔) screened onto ink, offset 7px/−5px in opposite directions, with ink-starved noise and paper grain, under a scrim with a light band behind the clear nav. H1 and one-line sub sit on a soft ink pool, the next-edition ticket inside the stage. The ticket is the CTA.
+   - How: `.riso` in `index.css`. Each plate is `/hero.webp` thresholded by CSS filter functions (`grayscale(1) brightness(gain) contrast(100)`, cut = 0.5 / gain), coloured by its brand ink via `multiply`, and `screen`-blended onto ink. The cut happens after upscaling, so edges stay crisp at 1920 and on 3x phones from the 900px photo. No build step, no SVG filters on the photo; the only SVG is two 256px noise tiles and the grain tile, rasterised once. To change the photo, replace `public/hero.webp` (keep it ~900×474 and update `heroPhoto` in `data/photos.ts`) and re-check contrast.
+   - Contrast (glyph pixels, worst 5%): headline ≥ 5.8:1, orange "actually" ≥ 4.2:1, intro ≥ 6.9:1, nav links ≥ 5.9:1 at 375–1920.
 3. **Builds (paper)** `#builds` — ledger: name, one-line outcome, origin, builder credit (`SHOW_BUILDER_NAMES`).
-4. **Room (paper band)** `#room` — the poster line as headline, a static five-photo grid. No carousel.
-5. **Nights (ink)** `#nights` — past editions: date, title, venue. Link to Luma.
+4. **Room (paper band)** `#room` — the poster line as headline, set on a panorama photo, with a static four-photo strip below. No carousel.
+5. **Nights (ink)** `#nights` — past editions led by a big orange edition number: date, title, venue. Link to Luma.
 6. **People (paper)** `#people` — photo, name, role.
 7. **FAQ (paper)** `#faq` — five short answers, accessible accordion.
-8. **Join (paper band, ink card)** `#join` — headline + form that opens WhatsApp prefilled.
-9. **Footer (ink)** — wordmark, social icons, © line.
+8. **Join (ink band)** `#join` — headline + underline-field form that opens WhatsApp prefilled.
+9. **Footer (ink)** — big wordmark sign-off; beneath it an address ledger (WhatsApp, Luma, Instagram, LinkedIn, X) and the © line.
+
+Ink/paper boundaries are torn ticket edges: a dashed rule with two notches punched at the container edges.
 
 ## What is cut and why
 - Unsplash venue/contact images and the prebuiltui hero illustration — not ours, not real.

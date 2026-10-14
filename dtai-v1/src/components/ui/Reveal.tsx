@@ -5,17 +5,19 @@ interface RevealProps {
   /** Seconds. Small stagger between sibling reveals. */
   delay?: number
   as?: ElementType
+  /** Rise each child in turn (--stagger-step apart) instead of the element as one block. */
+  stagger?: boolean
   className?: string
   [attr: string]: unknown
 }
 
 /**
  * Fade + 12px rise, once, as soon as any part of the element is in view.
- * Pure CSS (.reveal / .is-in in index.css); the observer only adds a class.
+ * Pure CSS (.reveal / .stagger / .is-in in index.css); the observer only adds a class.
  * If IntersectionObserver is missing the content shows immediately, and
  * prefers-reduced-motion disables the transition in CSS.
  */
-export default function Reveal({ children, delay = 0, as = 'div', className = '', ...rest }: RevealProps) {
+export default function Reveal({ children, delay = 0, as = 'div', stagger = false, className = '', ...rest }: RevealProps) {
   const ref = useRef<HTMLElement>(null)
   const [shown, setShown] = useState(false)
 
@@ -37,8 +39,8 @@ export default function Reveal({ children, delay = 0, as = 'div', className = ''
     as,
     {
       ref,
-      className: `reveal ${shown ? 'is-in' : ''} ${className}`.trim(),
-      style: delay ? { transitionDelay: `${delay}s` } : undefined,
+      className: `${stagger ? 'stagger' : 'reveal'} ${shown ? 'is-in' : ''} ${className}`.trim(),
+      style: delay && !stagger ? { transitionDelay: `${delay}s` } : undefined,
       ...rest,
     },
     children,

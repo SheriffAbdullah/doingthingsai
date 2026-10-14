@@ -1,30 +1,34 @@
 import { roomPhotos } from '../data/photos'
 import Reveal from './ui/Reveal'
 
-/** Tile placement for the five photos: one large, two stacked, two wide. */
-const tiles = [
-  'col-span-2 aspect-[4/3] lg:col-span-4 lg:row-span-2 lg:aspect-auto',
-  'aspect-square lg:col-span-2 lg:aspect-auto',
-  'aspect-square lg:col-span-2 lg:aspect-auto',
-  'aspect-square lg:col-span-3 lg:aspect-auto',
-  'aspect-square lg:col-span-3 lg:aspect-auto',
-]
-
+/** Panorama + strip: the first photo carries the headline, the other four follow. Static, no carousel. */
 export default function Room() {
+  const [pano, ...strip] = roomPhotos
   return (
     <section id="room" aria-labelledby="room-title" className="bg-paper-2 section-pad">
       <div className="container-site">
-        <Reveal as="h2" id="room-title" className="display-lg max-w-[16ch]">
-          3 hours. Open laptops. Build. <span className="text-orange-deep">Good people.</span>
+        <Reveal className="relative aspect-[4/3] overflow-hidden rounded-xl bg-ink lg:aspect-[21/9]">
+          <img
+            src={pano.src}
+            width={pano.width}
+            height={pano.height}
+            alt={pano.alt}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover object-[50%_40%]"
+          />
+          <div className="pano-scrim absolute inset-0" aria-hidden="true" />
+          <h2
+            id="room-title"
+            className="display-lg absolute inset-x-5 bottom-5 max-w-[16ch] text-paper sm:inset-x-8 sm:bottom-8 lg:inset-x-10 lg:bottom-10"
+          >
+            3 hours. Open laptops. Build. <span className="text-orange">Good people.</span>
+          </h2>
         </Reveal>
 
-        <Reveal
-          as="ul"
-          className="mt-16 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-6 lg:grid-rows-[15rem_15rem_19rem]"
-          delay={0.05}
-        >
-          {roomPhotos.map((p, i) => (
-            <li key={p.src} className={`photo ${tiles[i]}`}>
+        <Reveal as="ul" stagger className="mt-3 grid grid-cols-2 gap-3 md:mt-4 md:gap-4 lg:grid-cols-4">
+          {strip.map((p) => (
+            <li key={p.src} className="photo aspect-square lg:aspect-[4/3]">
               <img
                 src={p.src}
                 width={p.width}

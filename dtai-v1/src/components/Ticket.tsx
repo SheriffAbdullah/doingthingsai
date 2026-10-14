@@ -37,9 +37,10 @@ export default function Ticket() {
     : [['Date', 'Next edition soon']]
 
   return (
-    <div className="ticket-in relative">
+    <div className="ticket-in relative w-full max-w-[24rem]">
       <a
         ref={ref}
+        id="hero-ticket"
         href={ev?.url ?? LUMA_PROFILE_URL}
         target="_blank"
         rel="noopener noreferrer"
