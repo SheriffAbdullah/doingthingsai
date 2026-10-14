@@ -1,6 +1,7 @@
 import { useId, useRef, useState } from 'react'
 import { WHATSAPP_DISPLAY, WHATSAPP_NUMBER } from '../data/site'
 import Reveal from './ui/Reveal'
+import Tear from './ui/Tear'
 import { WhatsAppIcon } from './ui/Icons'
 
 type Intent = 'attend' | 'host' | 'partner' | 'speak'
@@ -82,70 +83,67 @@ export default function Join() {
 
   const Err = ({ k }: { k: keyof Values }) =>
     touched[k] && errors[k] ? (
-      <p id={`${uid}-${k}-err`} className="mt-1.5 text-sm font-medium text-orange-deep">{errors[k]}</p>
+      <p id={`${uid}-${k}-err`} className="mt-1.5 text-sm font-medium text-orange">{errors[k]}</p>
     ) : null
 
-  const label = 'meta mb-2 block text-ink/70'
+  const label = 'meta mb-1 block text-paper/60'
 
   return (
-    <section id="join" aria-labelledby="join-title" className="bg-paper-2 section-pad">
-      <div className="container-site">
-        <Reveal className="grid overflow-hidden rounded-2xl bg-paper lg:grid-cols-12">
-          <div className="on-ink bg-ink p-6 text-paper md:p-12 lg:col-span-5 lg:p-14">
-            <h2 id="join-title" className="display-lg">
-              Pull up a chair. <span className="text-orange">Bring a laptop.</span>
-            </h2>
-          </div>
+    <section id="join" aria-labelledby="join-title" className="on-ink relative bg-ink text-paper section-pad">
+      <Tear from="paper" />
+      <div className="container-site grid items-start gap-12 lg:grid-cols-12 lg:gap-20">
+        <Reveal as="h2" id="join-title" className="display-lg lg:sticky lg:top-24 lg:col-span-5">
+          Pull up a chair. <span className="text-orange">Bring a laptop.</span>
+        </Reveal>
 
-          <div className="p-6 text-ink md:p-12 lg:col-span-7 lg:p-14">
-            {status === 'sent' ? (
-              <div role="status" aria-live="polite" className="flex h-full flex-col justify-center">
-                <h3 className="display-md">Now hit send in WhatsApp.</h3>
-                <p className="mt-4 text-ink/70">Didn’t open? Copy it to {WHATSAPP_DISPLAY}.</p>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <button type="button" onClick={copy} className="btn btn-quiet btn-sm">{copied ? 'Copied' : 'Copy message'}</button>
-                  <button type="button" onClick={() => setStatus('idle')} className="btn btn-sm text-ink/70 underline underline-offset-4 hover:text-ink">
-                    Edit
-                  </button>
+        <Reveal className="lg:col-span-7" delay={0.05}>
+          {status === 'sent' ? (
+            <div role="status" aria-live="polite">
+              <h3 className="display-md">Now hit send in WhatsApp.</h3>
+              <p className="mt-4 text-paper/70">Didn’t open? Copy it to {WHATSAPP_DISPLAY}.</p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <button type="button" onClick={copy} className="btn btn-quiet btn-sm">{copied ? 'Copied' : 'Copy message'}</button>
+                <button type="button" onClick={() => setStatus('idle')} className="btn btn-sm text-paper/70 underline underline-offset-4 hover:text-paper">
+                  Edit
+                </button>
+              </div>
+            </div>
+          ) : (
+            <form ref={formRef} onSubmit={onSubmit} noValidate className="grid gap-6">
+              <div className="grid gap-6 sm:grid-cols-2">
+                <div>
+                  <label htmlFor={`${uid}-name`} className={label}>Name</label>
+                  <input {...field('name')} type="text" autoComplete="name" className="field" required />
+                  <Err k="name" />
+                </div>
+                <div>
+                  <label htmlFor={`${uid}-email`} className={label}>Email</label>
+                  <input {...field('email')} type="email" autoComplete="email" inputMode="email" className="field" required />
+                  <Err k="email" />
                 </div>
               </div>
-            ) : (
-              <form ref={formRef} onSubmit={onSubmit} noValidate className="grid gap-5">
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <div>
-                    <label htmlFor={`${uid}-name`} className={label}>Name</label>
-                    <input {...field('name')} type="text" autoComplete="name" className="field" required />
-                    <Err k="name" />
-                  </div>
-                  <div>
-                    <label htmlFor={`${uid}-email`} className={label}>Email</label>
-                    <input {...field('email')} type="email" autoComplete="email" inputMode="email" className="field" required />
-                    <Err k="email" />
-                  </div>
-                </div>
 
-                <div>
-                  <label htmlFor={`${uid}-intent`} className={label}>I want to</label>
-                  <select {...field('intent')} className="field">
-                    {INTENTS.map((i) => <option key={i.value} value={i.value}>{i.label}</option>)}
-                  </select>
-                </div>
+              <div>
+                <label htmlFor={`${uid}-intent`} className={label}>I want to</label>
+                <select {...field('intent')} className="field">
+                  {INTENTS.map((i) => <option key={i.value} value={i.value}>{i.label}</option>)}
+                </select>
+              </div>
 
-                <div>
-                  <label htmlFor={`${uid}-message`} className={label}>Message</label>
-                  <textarea {...field('message')} rows={4} className="field" required />
-                  <Err k="message" />
-                </div>
+              <div>
+                <label htmlFor={`${uid}-message`} className={label}>Message</label>
+                <textarea {...field('message')} rows={3} className="field" required />
+                <Err k="message" />
+              </div>
 
-                <div className="pt-1">
-                  <button type="submit" className="btn btn-primary">
-                    Send on WhatsApp
-                    <WhatsAppIcon size={16} />
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
+              <div className="pt-2">
+                <button type="submit" className="btn btn-primary btn-lg">
+                  Send on WhatsApp
+                  <WhatsAppIcon size={16} />
+                </button>
+              </div>
+            </form>
+          )}
         </Reveal>
       </div>
     </section>
