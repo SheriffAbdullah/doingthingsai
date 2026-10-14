@@ -1,95 +1,71 @@
-import { motion } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
+import { CTA_LABEL, LUMA_EVENT_URL, WHATSAPP_URL } from '../data/site'
+import { heroPhoto } from '../data/photos'
+import Ticket from './Ticket'
+import { ArrowUpRight, WhatsAppIcon } from './ui/Icons'
+
+const delay = (s: number) => ({ animationDelay: `${s}s` })
 
 export default function Hero() {
   return (
     <section
-      className="min-h-[100svh] flex items-center pt-16 bg-bg-light bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage:
-          "linear-gradient(180deg, rgba(242,240,237,0.28) 0%, rgba(242,240,237,0.78) 100%), url('https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/gradient-bg-with-grid.png')",
-      }}
+      id="top"
+      aria-labelledby="hero-title"
+      className="on-ink bg-ink text-paper"
+      style={{ paddingTop: 'var(--nav-h)' }}
     >
-      <div className="site-container w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center py-8 lg:py-16">
+      <div className="container-site grid items-center gap-12 pb-16 pt-12 md:pb-20 md:pt-16 lg:grid-cols-12 lg:gap-8 lg:pb-24 lg:pt-20">
+        {/* Copy */}
+        <div className="lg:col-span-7">
+          <p className="eyebrow rise text-orange">Human-first 0→1 AI community · Chennai</p>
 
-          {/* ── Left Column ───────────────────────────────── */}
-          <div className="flex flex-col">
-            {/* Pill tag */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="mb-7"
-            >
-              <span
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-tag border border-navy/20 font-body text-xs text-navy/70"
-              >
-                <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0" />
-                CHENNAI &nbsp;·&nbsp; INDIA &nbsp;·&nbsp; 0 → 1
-              </span>
-            </motion.div>
+          <h1 id="hero-title" className="display-xl rise mt-6 max-w-[11ch]" style={delay(0.08)}>
+            For people who <span className="text-orange">actually</span> build with AI.
+          </h1>
 
-            {/* Headline — 3 stacked lines, responsive */}
-            <motion.h1
-              className="font-display font-extrabold leading-[1.02] tracking-tight mb-7
-                         text-[2.4rem] sm:text-[3.5rem] md:text-[4rem] lg:text-[3.75rem] xl:text-[4.75rem]"
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.18, ease: [0.19, 1, 0.22, 1] }}
-            >
-              <span className="text-navy block">Human-first</span>
-              <span className="text-accent block">0→1&nbsp;&nbsp;AI</span>
-              <span className="text-accent block">Community.</span>
-            </motion.h1>
+          <p className="lede rise mt-7 text-paper/75" style={delay(0.16)}>
+            Build &amp; Blend is a small, closed-door builders’ night. Open laptops, three hours,
+            good people. Come with an idea, leave with something real, then go find users, sell it,
+            grow it. 0 → 1 → many.
+          </p>
 
-            {/* Body */}
-            <motion.p
-              className="font-body text-navy/55 text-base leading-relaxed max-w-sm mb-10"
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.3, ease: [0.19, 1, 0.22, 1] }}
+          <div className="rise mt-9 flex flex-wrap items-center gap-x-6 gap-y-4" style={delay(0.24)}>
+            <a href={LUMA_EVENT_URL} target="_blank" rel="noopener noreferrer" className="btn btn-primary px-7 text-base">
+              {CTA_LABEL}
+              <ArrowUpRight size={16} />
+            </a>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-arrow min-h-[44px] text-paper/80 hover:text-paper"
+              style={{ textDecorationColor: 'rgb(244 239 230 / 0.3)' }}
             >
-              For people who actually build with AI. Come with an idea. Leave with something real.
-            </motion.p>
+              <WhatsAppIcon size={18} />
+              Or just WhatsApp Chandru
+            </a>
+          </div>
+        </div>
 
-            {/* CTA — orange pill button with inline arrow */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.42, ease: [0.19, 1, 0.22, 1] }}
-            >
-              <a
-                href="https://luma.com/00dhanbk"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 font-body font-semibold text-white bg-accent px-6 py-3 rounded-pill no-underline hover:bg-accent/90 hover:scale-[0.97] active:scale-95 transition-all duration-200 group"
-              >
-                Join the Build
-                <span className="flex items-center justify-center w-6 h-6 rounded-full border border-white/40 group-hover:border-white/70 transition-colors">
-                  <ArrowUpRight size={13} className="text-white" />
-                </span>
-              </a>
-            </motion.div>
+        {/* Photo + ticket */}
+        <div className="relative lg:col-span-5">
+          <div className="photo rise aspect-[4/3] lg:ml-10 lg:aspect-[5/6]" style={delay(0.1)}>
+            <img
+              src={heroPhoto.src}
+              width={heroPhoto.width}
+              height={heroPhoto.height}
+              alt={heroPhoto.alt}
+              className="h-full w-full object-cover object-[30%_50%]"
+              fetchPriority="high"
+              decoding="async"
+            />
+            <p className="meta absolute left-4 top-4 rounded-md bg-ink/70 px-2.5 py-1.5 text-paper/90">
+              A Build &amp; Blend night
+            </p>
           </div>
 
-          {/* ── Right Column ─────────────────────────────── */}
-          <motion.div
-            className="relative"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.25, ease: [0.19, 1, 0.22, 1] }}
-          >
-            {/* Hero illustration */}
-            <div className="relative">
-              <img
-                src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/users-group.png"
-                alt="Builders collaborating at Build &amp; Blend"
-                className="w-full h-auto"
-              />
-            </div>
-          </motion.div>
-
+          <div className="-mt-20 px-2 sm:px-6 lg:absolute lg:-bottom-10 lg:-left-6 lg:mt-0 lg:w-[26rem] lg:px-0">
+            <Ticket />
+          </div>
         </div>
       </div>
     </section>
