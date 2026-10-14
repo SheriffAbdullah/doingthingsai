@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base resets ─────────────────────────────────────────── */
+@layer base {
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  body {
+    background-color: #F2F0ED;
+    color: #0E1A2B;
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    letter-spacing: -0.01px;
+    margin: 0;
+    overflow-x: hidden;
+    max-width: 100%;
+    font-feature-settings: "calt" 0, "liga" 0, "ss03", "cv01", "cv10", "zero" 0;
+  }
+
+  ::selection {
+    background-color: #F05A28;
+    color: #F9F9F9;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+}
+
+/* ─── Utility classes ─────────────────────────────────────── */
+@layer utilities {
+
+  /* Container */
+  .site-container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1rem, 4vw, 3rem);
+    padding-right: clamp(1rem, 4vw, 3rem);
+  }
+
+  /* Section spacing */
+  .section-py {
+    padding-top: clamp(4rem, 7vw, 6rem);
+    padding-bottom: clamp(4rem, 7vw, 6rem);
+  }
+
+  .section-py-sm {
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .section-py-lg {
+    padding-top: clamp(5rem, 9vw, 8rem);
+    padding-bottom: clamp(5rem, 9vw, 8rem);
+  }
+
+  /* Fluid text — Inter with Brex aggressive negative tracking */
+  .text-display {
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(2.8rem, 7vw, 4.5rem);
+    font-weight: 600;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    font-feature-settings: "calt" 0, "liga" 0, "ss03", "cv01", "cv10", "zero" 0;
+  }
+
+  .text-h1 {
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    font-feature-settings: "calt" 0, "liga" 0, "ss03", "cv01", "cv10", "zero" 0;
+  }
+
+  .text-h2 {
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 600;
+    line-height: 1.21;
+    letter-spacing: -0.02em;
+    font-feature-settings: "calt" 0, "liga" 0, "ss03", "cv01", "cv10", "zero" 0;
+  }
+
+  .text-h3 {
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.33;
+    letter-spacing: -0.01em;
+    font-feature-settings: "calt" 0, "liga" 0, "ss03", "cv01", "cv10", "zero" 0;
+  }
+
+  /* Tag badge — Brex 6px radius chip style */
+  .pill-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border: 1px solid rgba(14, 26, 43, 0.2);
+    border-radius: 6px;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: -0.01px;
+    color: #0E1A2B;
+    background: transparent;
+    margin-bottom: 1rem;
+    font-feature-settings: "calt" 0, "liga" 0;
+  }
+
+  .pill-tag-dark {
+    border-color: rgba(249, 249, 249, 0.25);
+    color: #F9F9F9;
+  }
+
+  /* Accent text span */
+  .accent-text {
+    color: #F05A28;
+  }
+
+  /* Fade-up animation */
+  .fade-up-init {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  .fade-up-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.65s cubic-bezier(0.19, 1, 0.22, 1),
+      transform 0.65s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  /* Prevent sections from leaking content horizontally (Framer Motion x-translate overflow) */
+  section {
+    overflow-x: hidden;
+  }
+
+  /* Marquee pause on hover */
+  .marquee-track:hover .animate-marquee,
+  .marquee-track:hover .animate-marquee2 {
+    animation-play-state: paused;
+  }
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F2F0ED;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0E1A2B;
+  border-radius: 3px;
+}
