@@ -1,16 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { CTA_LABEL, LUMA_EVENT_URL, NAV_LINKS } from '../data/site'
-import { ArrowUpRight, Spark } from './ui/Icons'
+import { ArrowUpRight } from './ui/Icons'
+import Wordmark from './ui/Wordmark'
 
 function Logo() {
   return (
-    <a href="#top" className="flex items-center gap-2 no-underline text-ink" aria-label="Doing Things AI, back to top">
-      <span className="grid h-8 w-8 place-items-center rounded-md bg-orange text-ink">
-        <Spark size={16} />
-      </span>
-      <span className="font-display font-extrabold text-[1.2rem] tracking-[-0.03em] leading-none">
-        Doing Things AI
-      </span>
+    <a href="#top" className="flex min-h-[44px] items-center gap-2 rounded-md text-ink no-underline" aria-label="Doing Things AI, back to top">
+      <Wordmark />
     </a>
   )
 }
@@ -66,9 +62,7 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 bg-paper transition-shadow duration-300 ${
-          scrolled ? 'shadow-[0_1px_0_rgb(21_19_15/0.14)]' : ''
-        }`}
+        className={`fixed inset-x-0 top-0 z-50 bg-paper transition-shadow duration-base ${scrolled ? 'nav-scrolled' : ''}`}
       >
         <div className="container-site flex items-center justify-between" style={{ height: 'var(--nav-h)' }}>
           <Logo />
@@ -79,7 +73,7 @@ export default function Navbar() {
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="inline-flex min-h-[44px] items-center rounded-md px-3 text-[0.9375rem] font-medium text-ink/75 no-underline transition-colors duration-200 hover:bg-ink/[0.06] hover:text-ink"
+                    className="inline-flex min-h-[44px] items-center rounded-md px-3 text-ui font-medium text-ink/70 no-underline transition-colors duration-fast hover:bg-ink/[0.06] hover:text-ink"
                   >
                     {l.label}
                   </a>
@@ -108,9 +102,9 @@ export default function Navbar() {
               onClick={() => (open ? close() : setOpen(true))}
             >
               <span className="relative block h-4 w-5" aria-hidden="true">
-                <span className={`absolute left-0 top-0 h-0.5 w-5 bg-current transition-transform duration-300 ease-out ${open ? 'translate-y-[7px] rotate-45' : ''}`} />
-                <span className={`absolute left-0 top-[7px] h-0.5 w-5 bg-current transition-opacity duration-200 ${open ? 'opacity-0' : ''}`} />
-                <span className={`absolute left-0 top-[14px] h-0.5 w-5 bg-current transition-transform duration-300 ease-out ${open ? '-translate-y-[7px] -rotate-45' : ''}`} />
+                <span className={`absolute left-0 top-0 h-0.5 w-5 bg-current transition-transform duration-base ease-out ${open ? 'translate-y-[7px] rotate-45' : ''}`} />
+                <span className={`absolute left-0 top-[7px] h-0.5 w-5 bg-current transition-opacity duration-fast ${open ? 'opacity-0' : ''}`} />
+                <span className={`absolute left-0 top-[14px] h-0.5 w-5 bg-current transition-transform duration-base ease-out ${open ? '-translate-y-[7px] -rotate-45' : ''}`} />
               </span>
             </button>
           </div>
@@ -148,7 +142,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
-                className="btn btn-primary w-full text-base"
+                className="btn btn-primary btn-lg w-full"
               >
                 {CTA_LABEL}
                 <ArrowUpRight size={16} />

@@ -15,12 +15,12 @@ function Item({ q, a, open, onToggle }: { q: string; a: string; open: boolean; o
           onClick={onToggle}
           className="group flex w-full items-center gap-6 py-6 text-left md:py-7"
         >
-          <span className="flex-1 font-display text-[1.25rem] font-semibold leading-snug tracking-[-0.015em] md:text-[1.4rem]">
+          <span className="display-sm flex-1">
             {q}
           </span>
-          <span aria-hidden="true" className="relative grid h-6 w-6 shrink-0 place-items-center text-ink/60 transition-colors group-hover:text-ink">
+          <span aria-hidden="true" className="relative grid h-6 w-6 shrink-0 place-items-center text-ink/60 transition-colors duration-fast group-hover:text-ink">
             <span className="absolute h-[2px] w-3.5 bg-current" />
-            <span className={`absolute h-[2px] w-3.5 bg-current transition-transform duration-300 ease-out ${open ? 'rotate-0' : 'rotate-90'}`} />
+            <span className={`absolute h-[2px] w-3.5 bg-current transition-transform duration-base ease-out ${open ? 'rotate-0' : 'rotate-90'}`} />
           </span>
         </button>
       </h3>

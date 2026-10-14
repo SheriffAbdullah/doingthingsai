@@ -1,5 +1,6 @@
 import { INSTAGRAM_URL, LINKEDIN_URL, WHATSAPP_URL, X_URL } from '../data/site'
-import { InstagramIcon, LinkedInIcon, Spark, WhatsAppIcon, XIcon } from './ui/Icons'
+import { InstagramIcon, LinkedInIcon, WhatsAppIcon, XIcon } from './ui/Icons'
+import Wordmark from './ui/Wordmark'
 
 const socials = [
   { label: 'Instagram', href: INSTAGRAM_URL, Icon: InstagramIcon },
@@ -12,11 +13,10 @@ export default function Footer() {
   return (
     <footer className="on-ink bg-ink text-paper">
       <div className="container-site flex flex-col gap-8 py-12 md:flex-row md:items-center md:justify-between">
-        <p className="flex items-center gap-2 font-display text-lg font-extrabold tracking-[-0.03em]">
-          <span className="grid h-7 w-7 place-items-center rounded-md bg-orange text-ink"><Spark size={14} /></span>
-          Doing Things AI
+        <p className="flex items-center gap-2">
+          <Wordmark />
         </p>
-        <ul className="flex flex-wrap gap-1 -ml-3 md:ml-0">
+        <ul className="-ml-3 flex flex-wrap gap-1 md:-mr-3 md:ml-0">
           {socials.map(({ label, href, Icon }) => (
             <li key={label}>
               <a
@@ -24,7 +24,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="grid h-11 w-11 place-items-center rounded-md text-paper/70 transition-colors hover:bg-paper/10 hover:text-paper"
+                className="grid h-11 w-11 place-items-center rounded-md text-paper/70 transition-colors duration-fast hover:bg-paper/10 hover:text-paper"
               >
                 <Icon size={18} />
               </a>
@@ -33,7 +33,7 @@ export default function Footer() {
         </ul>
       </div>
       <div className="container-site">
-        <p className="border-t hairline py-6 text-sm text-paper/55">© {new Date().getFullYear()} Doing Things AI, Chennai</p>
+        <p className="border-t hairline py-6 text-sm text-paper/60">© {new Date().getFullYear()} Doing Things AI, Chennai</p>
       </div>
     </footer>
   )

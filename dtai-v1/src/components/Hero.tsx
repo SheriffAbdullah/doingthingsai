@@ -24,7 +24,7 @@ export default function Hero() {
           </p>
 
           <div className="rise mt-10" style={delay(0.2)}>
-            <a href={LUMA_EVENT_URL} target="_blank" rel="noopener noreferrer" className="btn btn-primary px-7 text-base">
+            <a href={LUMA_EVENT_URL} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg">
               {CTA_LABEL}
               <ArrowUpRight size={16} />
             </a>
