@@ -1,26 +1,55 @@
+import { useRef } from 'react'
 import { heroPhoto } from '../data/photos'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import Ticket from './Ticket'
 
 const delay = (s: number) => ({ animationDelay: `${s}s` })
 
 /**
- * Photo stage: the room is the backdrop and the ticket sits inside it.
- * The ticket is the hero's only "Join the Build"; the nav button stays
- * hidden until it scrolls away (Navbar).
+ * Photo stage: the room, printed as a two-plate riso (orange + paper, see .riso in
+ * index.css), is the backdrop and the ticket sits inside it. The ticket is the
+ * hero's only "Join the Build"; the nav button stays hidden until it scrolls away
+ * (Navbar). On mouse/pen devices the plates drift apart with the pointer.
  */
 export default function Hero() {
+  const reduce = useReducedMotion()
+  const printRef = useRef<HTMLDivElement>(null)
+
+  const onMove = (e: React.PointerEvent<HTMLElement>) => {
+    const print = printRef.current
+    if (reduce || e.pointerType === 'touch' || !print) return
+    const r = e.currentTarget.getBoundingClientRect()
+    print.style.setProperty('--riso-dx', `${(((e.clientX - r.left) / r.width - 0.5) * 22).toFixed(1)}px`)
+    print.style.setProperty('--riso-dy', `${(((e.clientY - r.top) / r.height - 0.5) * 14).toFixed(1)}px`)
+  }
+  const onLeave = () => {
+    printRef.current?.style.removeProperty('--riso-dx')
+    printRef.current?.style.removeProperty('--riso-dy')
+  }
+
+  const photo = (alt: string, priority: boolean) => (
+    <img
+      src={heroPhoto.src}
+      width={heroPhoto.width}
+      height={heroPhoto.height}
+      alt={alt}
+      fetchPriority={priority ? 'high' : undefined}
+      decoding="async"
+    />
+  )
+
   return (
-    <section id="top" aria-labelledby="hero-title" className="on-ink relative isolate bg-ink text-paper">
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <img
-          src={heroPhoto.src}
-          width={heroPhoto.width}
-          height={heroPhoto.height}
-          alt={heroPhoto.alt}
-          className="h-full w-full object-cover object-[40%_45%]"
-          fetchPriority="high"
-          decoding="async"
-        />
+    <section
+      id="top"
+      aria-labelledby="hero-title"
+      className="on-ink relative isolate bg-ink text-paper"
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
+    >
+      <div ref={printRef} className="riso absolute inset-0 -z-10 overflow-hidden">
+        <div className="riso-plate riso-plate-1">{photo(heroPhoto.alt, true)}</div>
+        <div className="riso-plate riso-plate-2" aria-hidden="true">{photo('', false)}</div>
+        <div className="riso-grain absolute inset-0" aria-hidden="true" />
         <div className="hero-scrim absolute inset-0" aria-hidden="true" />
       </div>
 
