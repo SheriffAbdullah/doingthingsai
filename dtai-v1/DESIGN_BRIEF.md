@@ -21,7 +21,7 @@ Motifs: a perforated ticket stub, rubber-stamp edition numbers, hairline rules a
 - Ink `#15130F` (warm charcoal) · Ink-2 `#211E19` (raised surface on ink)
 - Orange `#F0581F` (signature; buttons carry **ink text** on orange for AA) · Orange-deep `#B9400C` (orange text on paper, AA)
 - Blue `#2457D6` (the second mascot; focus rings and one or two accents only)
-- Text on paper: ink at 100 / 72 / 56 %. Text on ink: paper at 100 / 70 / 50 %.
+- Text on paper: ink at 100 / 70 / 60 %. Text on ink: paper at 100 / 70 / 60 % (60 % is the AA floor on both). Field borders ink 50 % (3:1).
 
 ## Type (self-hosted via @fontsource-variable, swap, no external CSS)
 - Display: **Bricolage Grotesque** 700–800, tracking −0.03em, line-height 0.95–1.05. Fluid: h1 `clamp(2.6rem, 7vw, 6rem)`, h2 `clamp(2rem, 4.2vw, 3.4rem)`.

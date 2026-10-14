@@ -13,10 +13,21 @@
   --ink: 21 19 15;           /* #15130F */
   --ink-2: 33 30 25;         /* #211E19 */
   --orange: 240 88 31;       /* #F0581F */
+  --orange-hi: 255 106 47;   /* #FF6A2F, primary button hover */
   --orange-deep: 185 64 12;  /* #B9400C */
   --blue: 36 87 214;         /* #2457D6 */
 
+  /* Hairlines: decorative rules. Field borders use --line-strong (3:1 on paper). */
+  --line: 0.14;
+  --line-strong: 0.5;
+
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast: 200ms;   /* hovers, colour, small transforms */
+  --dur-base: 300ms;   /* accordion, menu icon, shadows */
+  --dur-slow: 500ms;   /* scroll reveals */
+
+  --shadow-lift: 0 30px 60px -20px rgb(0 0 0 / 0.6);
+  --shadow-lift-hover: 0 36px 70px -20px rgb(0 0 0 / 0.7);
   --nav-h: 64px;
 }
 
@@ -103,30 +114,36 @@
     @apply inline-flex items-center justify-center gap-2 font-body font-semibold rounded-lg select-none;
     min-height: 48px;
     padding-inline: 1.375rem;
-    font-size: 0.9375rem;
+    @apply text-ui;
     line-height: 1;
     text-decoration: none;
-    transition: transform 200ms var(--ease-out), background-color 200ms var(--ease-out), color 200ms var(--ease-out), border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+    transition-property: transform, background-color, color, border-color, box-shadow;
+    transition-duration: var(--dur-fast);
+    transition-timing-function: var(--ease-out);
   }
   .btn:active { transform: translateY(1px); }
   .btn-primary {
     @apply bg-orange text-ink;
     box-shadow: 0 1px 0 rgb(var(--ink) / 0.25) inset, 0 0 0 1px rgb(var(--ink) / 0.08);
   }
-  .btn-primary:hover { background: #ff6a2f; transform: translateY(-1px); box-shadow: 0 6px 18px -6px rgb(var(--orange) / 0.7); }
+  .btn-primary:hover { background: rgb(var(--orange-hi)); transform: translateY(-1px); box-shadow: 0 6px 18px -6px rgb(var(--orange) / 0.7); }
   .btn-quiet {
     @apply text-ink border border-ink/30 bg-transparent;
   }
   .btn-quiet:hover { @apply border-ink bg-ink text-paper; }
-  .btn-sm { min-height: 40px; padding-inline: 1rem; font-size: 0.875rem; }
+  /* Every size keeps a 44px+ target. */
+  .btn-sm { min-height: 44px; padding-inline: 1rem; font-size: 0.875rem; }
+  .btn-lg { padding-inline: 1.75rem; font-size: 1rem; }
 
   .link-arrow {
     @apply inline-flex items-center gap-1.5 font-semibold underline underline-offset-4 decoration-1;
     text-decoration-color: rgb(var(--ink) / 0.3);
-    transition: text-decoration-color 200ms var(--ease-out);
+    transition: text-decoration-color var(--dur-fast) var(--ease-out);
   }
   .link-arrow:hover { text-decoration-color: currentColor; }
-  .link-arrow svg { transition: transform 200ms var(--ease-out); }
+  .link-arrow svg { transition: transform var(--dur-fast) var(--ease-out); }
+  .on-ink .link-arrow { text-decoration-color: rgb(var(--paper) / 0.3); }
+  .on-ink .link-arrow:hover { text-decoration-color: currentColor; }
   .link-arrow:hover svg { transform: translate(2px, -2px); }
 
   /* Edition stamp */
@@ -140,8 +157,15 @@
     transform: rotate(-6deg);
   }
 
-  .hairline { border-color: rgb(var(--ink) / 0.14); }
-  .on-ink .hairline { border-color: rgb(var(--paper) / 0.16); }
+  .hairline { border-color: rgb(var(--ink) / var(--line)); }
+  .on-ink .hairline { border-color: rgb(var(--paper) / var(--line)); }
+  .nav-scrolled { box-shadow: 0 1px 0 rgb(var(--ink) / var(--line)); }
+
+  /* The hero ticket: paper card lifted off the ink. */
+  .ticket-card {
+    box-shadow: var(--shadow-lift), 0 0 0 1px rgb(var(--paper) / 0.12);
+  }
+  .ticket-card:hover { box-shadow: var(--shadow-lift-hover), 0 0 0 1px rgb(var(--paper) / 0.2); }
 
   /* Photo treatment: consistent corner, subtle ink edge */
   .photo {
@@ -154,7 +178,7 @@
   .perf {
     position: relative;
     height: 0;
-    border-top: 2px dashed rgb(var(--ink) / 0.25);
+    border-top: 2px dashed rgb(var(--ink) / 0.25); /* dashes read lighter than a solid rule */
   }
   /* Notches sit centred on the card edge; the card clips the outer half. */
   .perf::before, .perf::after {
@@ -170,18 +194,20 @@
 
   /* Form fields */
   .field {
-    @apply w-full rounded-lg border border-ink/25 bg-paper px-4 text-ink font-body;
+    @apply w-full rounded-lg border bg-paper px-4 text-ink font-body;
+    border-color: rgb(var(--ink) / var(--line-strong));
     min-height: 48px;
     font-size: 1rem;
-    transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+    transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
   }
-  .field:hover { border-color: rgb(var(--ink) / 0.45); }
+  .field:hover { border-color: rgb(var(--ink) / 0.75); }
   .field:focus { outline: none; border-color: rgb(var(--blue)); box-shadow: 0 0 0 3px rgb(var(--blue) / 0.2); }
   .field[aria-invalid='true'] { border-color: rgb(var(--orange-deep)); }
   .field[aria-invalid='true']:focus { box-shadow: 0 0 0 3px rgb(var(--orange) / 0.25); }
   textarea.field { padding-block: 0.8rem; min-height: 8rem; resize: vertical; }
   select.field {
     appearance: none;
+    /* Data URIs can't read CSS variables: %2315130F is --ink. */
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2315130F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.9rem center;
@@ -194,7 +220,7 @@
 .js .reveal {
   opacity: 0;
   transform: translateY(12px);
-  transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
 }
 .js .reveal.is-in { opacity: 1; transform: none; }
 
@@ -219,7 +245,7 @@
 /* Pointer tilt: --rx/--ry are set from JS on pointermove, transform-only. */
 .tilt {
   transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-  transition: transform 260ms var(--ease-out), box-shadow 300ms var(--ease-out);
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
   transform-style: preserve-3d;
 }
 
@@ -227,7 +253,7 @@
 .acc-panel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 300ms var(--ease-out);
+  transition: grid-template-rows var(--dur-base) var(--ease-out);
 }
 .acc-panel[data-open='true'] { grid-template-rows: 1fr; }
 .acc-panel > div { overflow: hidden; min-height: 0; }
@@ -236,7 +262,7 @@
   from { opacity: 0; transform: translateY(-8px); }
   to { opacity: 1; transform: none; }
 }
-.sheet-in { animation: sheet-in 220ms var(--ease-out) both; }
+.sheet-in { animation: sheet-in var(--dur-fast) var(--ease-out) both; }
 
 /* ─── Motion preferences ─────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {

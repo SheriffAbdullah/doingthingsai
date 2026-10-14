@@ -17,8 +17,16 @@ export default {
         body: ['"Inter Variable"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono Variable"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
+      /* UI text: buttons, nav links, ticket values. Sits between sm (14) and body (17). */
+      fontSize: {
+        ui: '0.9375rem',
+      },
       transitionTimingFunction: {
-        out: 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+        out: 'var(--ease-out)',
+      },
+      transitionDuration: {
+        fast: 'var(--dur-fast)',
+        base: 'var(--dur-base)',
       },
     },
   },

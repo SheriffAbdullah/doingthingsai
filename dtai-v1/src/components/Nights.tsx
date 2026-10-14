@@ -13,8 +13,7 @@ export default function Nights() {
             href={LUMA_PROFILE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="link-arrow min-h-[44px] text-paper/75 hover:text-paper"
-            style={{ textDecorationColor: 'rgb(244 239 230 / 0.3)' }}
+            className="link-arrow min-h-[44px] text-paper/70 hover:text-paper"
           >
             All on Luma
             <ArrowUpRight size={14} />
@@ -29,9 +28,9 @@ export default function Nights() {
             >
               <h3 className="display-sm text-paper md:order-2">
                 {e.title}
-                {e.status === 'partner' && <span className="meta ml-3 align-middle text-paper/50">Partner</span>}
+                {e.status === 'partner' && <span className="meta ml-3 align-middle text-paper/60">Partner</span>}
               </h3>
-              <p className="meta text-paper/55 md:order-1">{e.dateLabel}</p>
+              <p className="meta text-paper/60 md:order-1">{e.dateLabel}</p>
               <p className="col-span-2 text-sm text-paper/60 md:order-3 md:col-span-1 md:text-right">
                 {[e.venue, e.area].filter(Boolean).join(', ')}
               </p>
