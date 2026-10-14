@@ -253,13 +253,18 @@
     .hero-pool::before { inset: -22% -18% -20% -30%; }
   }
 
-  /* Hero stage scrim: keeps copy and nav legible over the print. */
+  /* Hero stage scrim: keeps copy and nav legible over the print. The first layer is a
+     band under the clear nav, so its 15px links hold 4.5:1 over the brightest plate. */
   .hero-scrim {
-    background: linear-gradient(180deg, rgb(var(--ink) / 0.7) 0%, rgb(var(--ink) / 0.4) 22%, rgb(var(--ink) / 0.9) 55%, rgb(var(--ink)) 100%);
+    --nav-band: linear-gradient(180deg, rgb(var(--ink) / 0.35) 0, rgb(var(--ink) / 0.35) var(--nav-h), rgb(var(--ink) / 0) calc(var(--nav-h) * 2));
+    background:
+      var(--nav-band),
+      linear-gradient(180deg, rgb(var(--ink) / 0.7) 0%, rgb(var(--ink) / 0.4) 22%, rgb(var(--ink) / 0.9) 55%, rgb(var(--ink)) 100%);
   }
   @media (min-width: 1024px) {
     .hero-scrim {
       background:
+        var(--nav-band),
         linear-gradient(180deg, rgb(var(--ink) / 0.65) 0%, rgb(var(--ink) / 0.25) 30%, rgb(var(--ink) / 0.9) 85%, rgb(var(--ink)) 100%),
         linear-gradient(90deg, rgb(var(--ink) / 0.65) 0%, rgb(var(--ink) / 0) 60%);
     }
