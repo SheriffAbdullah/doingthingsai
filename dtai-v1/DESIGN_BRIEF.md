@@ -9,7 +9,7 @@ Chennai founders, developers, designers, marketers, students and AI-curious prof
 The brand's edge is candour. Small rooms (6 people at Edition 1, usually ~8), real numbers (₹4,300 made at Women Who Build #1), and an explicit "we don't publish a member count" line. We lean into that instead of hiding it.
 
 ## One CTA verb
-**Join the Build** — in the nav, hero, after proof, in the timetable, after people, in the form. Never "RSVP", "Register", "Sign up". The ticket and every button go to the Luma page. Secondary intent (host/partner) is a text link, visually subordinate, to the form.
+**Join the Build** — in the nav, hero and ticket. Never "RSVP", "Register", "Sign up". The ticket and every button go to the Luma page. Secondary intent (host/partner) is a text link, visually subordinate, to the form.
 
 ## Aesthetic direction: "Wednesday-night ticket"
 Chalkboard ink + café paper + one signature orange. The community's own posters are a cream signboard hung over a warm café scene, with a chalkboard line: *3 hours. Open laptops. Build. Good people.* The site borrows that: ink (chalk) sections for the night-time things (hero, timetable, mission), paper sections for the ledger of things built, the people, the FAQ. Edition numbers are used like YC batch codes, stamped in mono: `ED.17`.
@@ -32,20 +32,20 @@ Motifs: a perforated ticket stub, rubber-stamp edition numbers, hairline rules a
 Ease-out `cubic-bezier(.2,.8,.2,1)`, 200–500ms, transform/opacity only. Reveals: 12px rise + fade, once, from framer-motion `whileInView`. Signature moment: the hero ticket drops in (y 24 → 0, rotate −5° → −3°) and the `ED.17` stamp thumps (scale 1.5 → 1, 350ms, 500ms delay); on pointer devices the ticket tilts ±5° toward the cursor. All of it is gated on `prefers-reduced-motion` (static ticket, no marquee, no tilt). No scroll hijacking, no WebGL.
 
 ## Section plan (single page, anchors)
-1. **Nav** — paper signboard, 5 flat anchors (Builds · Nights · Spaces · People · FAQ) + Join the Build. Mobile: full-height sheet, focus-trapped, Escape closes.
-2. **Hero (ink)** — eyebrow "Human-first 0→1 AI community · Chennai", H1, 2-line sub, CTA, WhatsApp link. Right: the Edition 17 ticket over a real session photo. Below: a ticker of honest numbers (static list under reduced motion).
-3. **Built in the room (paper)** `#builds` — ledger of things shipped: scene_044, AI Outreach Manager, Parent to-do app, ₹4,300. Builder credits behind a `SHOW_BUILDER_NAMES` flag pending Chandru's go-ahead. Namma Kuppai as a footnote. Closing: "If they can, you can too." + CTA.
-4. **The room (paper band)** `#room` — the chalk line as a big statement, scroll-snap photo strip of real photos with captions where known, two raw captions from Instagram, follow link.
-5. **Nights (ink)** `#nights` — timetable: Upcoming (Ed.17, date/time/venue/price/link) + Completed rows with status badges; posters as thumbnails; Luma link. Data lives in `src/data/events.ts` so Chandru's team edits one file.
-6. **Spaces (ink)** `#spaces` — address-book list of the six real venues with the editions they hosted; "Host a night" text link to the form.
-7. **People (paper)** `#people` — Chandru and Shankar as builders first, facts only.
-8. **Why (ink)** `#why` — founder quote in full, origin (Edition 1 poster: 8 July 2026, Third Wave Coffee, 6 people), the no-member-count line.
-9. **FAQ (paper)** `#faq` — 7 real objections, accessible accordion.
-10. **Join (paper, ink card)** `#join` — form with labels, inline validation, error/success states; opens WhatsApp prefilled. Direct links alongside.
-11. **Footer (ink)** — flat links, real social icons, WhatsApp number, © line.
+One headline per section, at most one supporting line, then the content. No eyebrows, no explainer copy.
+1. **Nav** — Builds · Nights · People · FAQ + Join the Build. Mobile: full-height sheet, focus-trapped, Escape closes.
+2. **Hero (ink)** — H1, one-line sub, CTA. Right: the next-edition ticket over a session photo.
+3. **Builds (paper)** `#builds` — ledger: name, one-line outcome, origin, builder credit (`SHOW_BUILDER_NAMES`).
+4. **Room (paper band)** `#room` — the poster line as headline, a static five-photo grid. No carousel.
+5. **Nights (ink)** `#nights` — past editions: date, title, venue. Link to Luma.
+6. **People (paper)** `#people` — photo, name, role.
+7. **FAQ (paper)** `#faq` — five short answers, accessible accordion.
+8. **Join (paper band, ink card)** `#join` — headline + form that opens WhatsApp prefilled.
+9. **Footer (ink)** — wordmark, social icons, © line.
 
 ## What is cut and why
 - Unsplash venue/contact images and the prebuiltui hero illustration — not ours, not real.
 - The WebGL CircularGallery (ogl) — GL warnings, poor on mobile, keyboard-hostile, ~bundle weight; replaced by a CSS scroll-snap strip. `ogl`, `clsx`, `tailwind-merge`, the unused `animata` text animators, `style.css`, `counter.ts` and template SVGs are removed.
 - Brand logo wall, member count, testimonial wall — no verified data (one participant quote exists and is used in the Women Who Build row only).
+- Subtraction pass: proof ticker marquee, Spaces, Why, the photo carousel (arrows/drag), photo captions, Instagram caption cards, participant quote, people bios/links, event posters/notes/status badges, the duplicate upcoming row in Nights, repeated CTAs, form helper text and error summary.
 - The fake "avatar stack" in event rows, the "Same city. Different builders. Bigger dreams." doodle, and the product photos that didn't show the product (e.g. a TradeShield screen captioned "AI Outreach Manager").

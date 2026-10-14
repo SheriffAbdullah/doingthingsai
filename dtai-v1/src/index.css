@@ -71,8 +71,8 @@
   }
   .display-lg {
     @apply font-display font-extrabold;
-    font-size: clamp(2rem, 4.4vw, 3.5rem);
-    line-height: 1.02;
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    line-height: 1;
     letter-spacing: -0.03em;
   }
   .display-md {
@@ -98,18 +98,6 @@
     letter-spacing: 0.08em;
     font-weight: 500;
   }
-  .meta-lg { @apply meta; font-size: 0.8125rem; }
-
-  .eyebrow {
-    @apply meta flex items-center gap-3;
-  }
-  .eyebrow::before {
-    content: '';
-    width: 1.5rem; height: 2px;
-    background: currentColor;
-    opacity: 0.6;
-  }
-
   /* Buttons — one primary, one quiet, one on-ink */
   .btn {
     @apply inline-flex items-center justify-center gap-2 font-body font-semibold rounded-lg select-none;
@@ -130,10 +118,6 @@
     @apply text-ink border border-ink/30 bg-transparent;
   }
   .btn-quiet:hover { @apply border-ink bg-ink text-paper; }
-  .btn-quiet-ink {
-    @apply text-paper border border-paper/30 bg-transparent;
-  }
-  .btn-quiet-ink:hover { @apply border-paper bg-paper text-ink; }
   .btn-sm { min-height: 40px; padding-inline: 1rem; font-size: 0.875rem; }
 
   .link-arrow {
@@ -191,7 +175,6 @@
     font-size: 1rem;
     transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
   }
-  .field::placeholder { color: rgb(var(--ink) / 0.4); }
   .field:hover { border-color: rgb(var(--ink) / 0.45); }
   .field:focus { outline: none; border-color: rgb(var(--blue)); box-shadow: 0 0 0 3px rgb(var(--blue) / 0.2); }
   .field[aria-invalid='true'] { border-color: rgb(var(--orange-deep)); }
@@ -204,21 +187,6 @@
     background-position: right 0.9rem center;
     padding-right: 2.75rem;
   }
-
-  /* Scroll-snap strip */
-  .strip {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
-    padding-inline: clamp(1rem, 4vw, 3rem);
-    scroll-padding-inline: clamp(1rem, 4vw, 3rem);
-    padding-block: 0.5rem;
-  }
-  .strip::-webkit-scrollbar { display: none; }
-  .strip > * { scroll-snap-align: start; flex: 0 0 auto; }
 }
 
 /* ─── Motion: reveals, hero entrance, ticket ────────────── */
@@ -270,20 +238,13 @@
 }
 .sheet-in { animation: sheet-in 220ms var(--ease-out) both; }
 
-/* ─── Marquee & motion preferences ──────────────────────── */
-.marquee-track:hover .marquee-inner,
-.marquee-track:focus-within .marquee-inner { animation-play-state: paused; }
-
+/* ─── Motion preferences ─────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .marquee-inner { animation: none !important; transform: none !important; flex-wrap: wrap; width: auto; }
-  .marquee-inner > ul { flex-wrap: wrap; row-gap: 0.75rem; }
-  .marquee-inner > ul > li { white-space: normal; }
-  .marquee-dup { display: none !important; }
   .js .reveal { opacity: 1; transform: none; }
   .rise, .sheet-in { animation: none; }
   .ticket-in { animation: none; transform: rotate(-1.5deg); }

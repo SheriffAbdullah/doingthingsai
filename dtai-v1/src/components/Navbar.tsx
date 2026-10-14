@@ -129,15 +129,14 @@ export default function Navbar() {
           >
             <nav aria-label="Primary mobile" className="container-site flex-1 overflow-y-auto border-t hairline pt-2">
               <ul>
-                {NAV_LINKS.map((l, i) => (
+                {NAV_LINKS.map((l) => (
                   <li key={l.href} className="border-b hairline">
                     <a
                       href={l.href}
                       onClick={() => setOpen(false)}
-                      className="flex min-h-[64px] items-center justify-between py-3 font-display text-[2rem] font-bold tracking-[-0.03em] text-ink no-underline"
+                      className="flex min-h-[64px] items-center py-3 font-display text-[2rem] font-bold tracking-[-0.03em] text-ink no-underline"
                     >
                       {l.label}
-                      <span className="meta opacity-50">0{i + 1}</span>
                     </a>
                   </li>
                 ))}

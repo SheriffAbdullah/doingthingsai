@@ -1,6 +1,6 @@
 export interface Build {
   name: string
-  /** Where it started. Used as the edition stamp. */
+  /** Where it started. */
   origin: string
   outcome: string
   builders?: string
@@ -11,30 +11,24 @@ export const builds: Build[] = [
   {
     name: 'scene_044',
     origin: 'Women Who Build #1',
-    outcome: 'Started as a prototype in the room. Launched publicly.',
+    outcome: 'Prototyped in the room. Launched publicly.',
     builders: 'Hemapriya Ulaganathan & G Akshaya Sri',
   },
   {
     name: 'AI Outreach Manager',
     origin: 'Build & Blend',
-    outcome: 'Prototype built in one session. He came back the next edition to make it better.',
+    outcome: 'Built in one session. Improved at the next.',
     builders: 'Elanchezhiyan Ragavan',
   },
   {
     name: 'Parent to-do app',
     origin: 'Edition 11',
-    outcome: 'Built with Claude in a single edition. Has a baby sleep-tracking feature made for his own family.',
+    outcome: 'Built with Claude in one edition, with baby sleep tracking.',
     builders: 'Sivanesan',
   },
   {
     name: '₹4,300',
     origin: 'Women Who Build #1',
-    outcome: 'Combined revenue made by participants who built, pitched to buyers, and sold. In one session.',
-    builders: 'the whole cohort',
+    outcome: 'Earned by participants in a single session.',
   },
 ]
-
-export const participantQuote = {
-  text: 'It was refreshing to be in a room full of women building, experimenting, learning and turning ideas into something real.',
-  by: 'Janaki Maya, Women Who Build #1 participant',
-}

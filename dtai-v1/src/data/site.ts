@@ -24,7 +24,6 @@ export const SHOW_BUILDER_NAMES = true
 export const NAV_LINKS = [
   { label: 'Builds', href: '#builds' },
   { label: 'Nights', href: '#nights' },
-  { label: 'Spaces', href: '#spaces' },
   { label: 'People', href: '#people' },
   { label: 'FAQ', href: '#faq' },
 ] as const

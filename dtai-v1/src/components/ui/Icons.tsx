@@ -60,14 +60,6 @@ export function ArrowUpRight({ size = 16, ...p }: IconProps) {
   )
 }
 
-export function ArrowRight({ size = 16, ...p }: IconProps) {
-  return (
-    <svg {...base(size)} strokeWidth={2} {...p}>
-      <path d="M5 12h14M13 6l6 6-6 6" />
-    </svg>
-  )
-}
-
 /** The asterisk on the orange mascot's cap. Used as a separator. */
 export function Spark({ size = 14, ...p }: IconProps) {
   return (

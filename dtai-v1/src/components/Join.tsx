@@ -1,7 +1,7 @@
 import { useId, useRef, useState } from 'react'
-import { CTA_LABEL, INSTAGRAM_URL, LUMA_EVENT_URL, WHATSAPP_DISPLAY, WHATSAPP_NUMBER, WHATSAPP_URL } from '../data/site'
+import { WHATSAPP_DISPLAY, WHATSAPP_NUMBER } from '../data/site'
 import Reveal from './ui/Reveal'
-import { ArrowUpRight, InstagramIcon, WhatsAppIcon } from './ui/Icons'
+import { WhatsAppIcon } from './ui/Icons'
 
 type Intent = 'attend' | 'host' | 'partner' | 'speak'
 
@@ -16,13 +16,13 @@ interface Values { name: string; email: string; intent: Intent; message: string 
 type Errors = Partial<Record<keyof Values, string>>
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+const REQUIRED: (keyof Values)[] = ['name', 'email', 'message']
 
 function validate(v: Values): Errors {
   const e: Errors = {}
-  if (v.name.trim().length < 2) e.name = 'Tell us your name (at least 2 characters).'
-  if (!v.email.trim()) e.email = 'We need an email so Chandru can reply if WhatsApp doesn’t go through.'
-  else if (!EMAIL_RE.test(v.email.trim())) e.email = 'That email doesn’t look right. Check for a typo?'
-  if (v.message.trim().length < 10) e.message = 'A sentence or two is enough, but we need at least 10 characters.'
+  if (v.name.trim().length < 2) e.name = 'Enter your name.'
+  if (!EMAIL_RE.test(v.email.trim())) e.email = 'Enter a valid email.'
+  if (v.message.trim().length < 10) e.message = 'Add a short message.'
   return e
 }
 
@@ -38,7 +38,7 @@ export default function Join() {
   const [touched, setTouched] = useState<Partial<Record<keyof Values, boolean>>>({})
   const [status, setStatus] = useState<'idle' | 'sent'>('idle')
   const [copied, setCopied] = useState(false)
-  const summaryRef = useRef<HTMLDivElement>(null)
+  const formRef = useRef<HTMLFormElement>(null)
 
   const field = (k: keyof Values) => ({
     id: `${uid}-${k}`,
@@ -62,8 +62,9 @@ export default function Join() {
     const errs = validate(values)
     setErrors(errs)
     setTouched({ name: true, email: true, message: true })
-    if (Object.keys(errs).length) {
-      summaryRef.current?.focus()
+    const firstBad = REQUIRED.find((k) => errs[k])
+    if (firstBad) {
+      formRef.current?.querySelector<HTMLElement>(`[name="${firstBad}"]`)?.focus()
       return
     }
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildMessage(values))}`
@@ -76,7 +77,7 @@ export default function Join() {
       await navigator.clipboard.writeText(buildMessage(values))
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-    } catch { /* clipboard unavailable; the textarea below still shows the text */ }
+    } catch { /* clipboard unavailable */ }
   }
 
   const Err = ({ k }: { k: keyof Values }) =>
@@ -84,119 +85,63 @@ export default function Join() {
       <p id={`${uid}-${k}-err`} className="mt-1.5 text-sm font-medium text-orange-deep">{errors[k]}</p>
     ) : null
 
-  const errorList = Object.entries(errors).filter(([k]) => touched[k as keyof Values])
+  const label = 'meta mb-2 block text-ink/70'
 
   return (
     <section id="join" aria-labelledby="join-title" className="bg-paper-2 section-pad">
       <div className="container-site">
-        <Reveal className="grid overflow-hidden rounded-2xl bg-ink text-paper on-ink shadow-[0_0_0_1px_rgb(21_19_15/0.1)] lg:grid-cols-12">
-          {/* Left: the ask */}
-          <div className="flex flex-col justify-between gap-10 p-7 md:p-10 lg:col-span-5 lg:p-12">
-            <div>
-              <p className="eyebrow text-orange mb-5">Join, host, or partner</p>
-              <h2 id="join-title" className="display-lg">
-                Pull up a chair. <span className="text-orange">Bring a laptop.</span>
-              </h2>
-              <p className="mt-5 text-paper/70">
-                RSVPs for the next night happen on Luma. Everything else, from hosting a session to
-                showing what you built, starts with a message.
-              </p>
-            </div>
-            <ul className="grid gap-3 border-t hairline pt-6 text-sm">
-              <li>
-                <a href={LUMA_EVENT_URL} target="_blank" rel="noopener noreferrer" className="link-arrow text-paper hover:text-orange" style={{ textDecorationColor: 'rgb(244 239 230 / 0.3)' }}>
-                  {CTA_LABEL} on Luma <ArrowUpRight size={13} />
-                </a>
-              </li>
-              <li>
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="link-arrow text-paper hover:text-orange" style={{ textDecorationColor: 'rgb(244 239 230 / 0.3)' }}>
-                  <WhatsAppIcon size={15} /> {WHATSAPP_DISPLAY} <ArrowUpRight size={13} />
-                </a>
-              </li>
-              <li>
-                <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="link-arrow text-paper hover:text-orange" style={{ textDecorationColor: 'rgb(244 239 230 / 0.3)' }}>
-                  <InstagramIcon size={15} /> @doingthingsai <ArrowUpRight size={13} />
-                </a>
-              </li>
-            </ul>
+        <Reveal className="grid overflow-hidden rounded-2xl bg-ink text-paper on-ink lg:grid-cols-12">
+          <div className="p-8 md:p-12 lg:col-span-5 lg:p-14">
+            <h2 id="join-title" className="display-lg">
+              Pull up a chair. <span className="text-orange">Bring a laptop.</span>
+            </h2>
           </div>
 
-          {/* Right: the form */}
-          <div className="bg-paper p-7 text-ink md:p-10 lg:col-span-7 lg:p-12">
+          <div className="bg-paper p-8 text-ink md:p-12 lg:col-span-7 lg:p-14">
             {status === 'sent' ? (
               <div role="status" aria-live="polite" className="flex h-full flex-col justify-center">
-                <span className="stamp self-start text-orange-deep text-base">Sent to WhatsApp</span>
-                <h3 className="display-md mt-6">Your message is pre-filled. Hit send over there.</h3>
-                <p className="mt-4 text-ink/70">
-                  If WhatsApp didn’t open, copy the message and send it to {WHATSAPP_DISPLAY} yourself.
-                </p>
-                <textarea readOnly className="field mt-5 !min-h-[9rem] text-sm" value={buildMessage(values)} aria-label="Your message" />
-                <div className="mt-4 flex flex-wrap gap-3">
+                <h3 className="display-md">Now hit send in WhatsApp.</h3>
+                <p className="mt-4 text-ink/70">Didn’t open? Copy it to {WHATSAPP_DISPLAY}.</p>
+                <div className="mt-6 flex flex-wrap gap-3">
                   <button type="button" onClick={copy} className="btn btn-quiet btn-sm">{copied ? 'Copied' : 'Copy message'}</button>
-                  <button type="button" onClick={() => setStatus('idle')} className="btn btn-sm text-ink/70 hover:text-ink underline underline-offset-4">
-                    Edit and resend
+                  <button type="button" onClick={() => setStatus('idle')} className="btn btn-sm text-ink/70 underline underline-offset-4 hover:text-ink">
+                    Edit
                   </button>
                 </div>
               </div>
             ) : (
-              <form onSubmit={onSubmit} noValidate className="grid gap-5">
-                <div
-                  ref={summaryRef}
-                  tabIndex={-1}
-                  role="alert"
-                  aria-live="assertive"
-                  className={errorList.length ? 'rounded-lg border border-orange-deep/40 bg-orange/10 p-4 text-sm' : 'sr-only'}
-                >
-                  {errorList.length > 0 && (
-                    <>
-                      <p className="font-semibold">Fix {errorList.length === 1 ? 'this' : 'these'} and try again:</p>
-                      <ul className="mt-1 list-disc pl-5">
-                        {errorList.map(([k, msg]) => (
-                          <li key={k}><a href={`#${uid}-${k}`} className="underline underline-offset-2">{msg}</a></li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
-                </div>
-
+              <form ref={formRef} onSubmit={onSubmit} noValidate className="grid gap-5">
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
-                    <label htmlFor={`${uid}-name`} className="meta mb-2 block text-ink/70">Name</label>
-                    <input {...field('name')} type="text" autoComplete="name" placeholder="What should we call you?" className="field" required />
+                    <label htmlFor={`${uid}-name`} className={label}>Name</label>
+                    <input {...field('name')} type="text" autoComplete="name" className="field" required />
                     <Err k="name" />
                   </div>
                   <div>
-                    <label htmlFor={`${uid}-email`} className="meta mb-2 block text-ink/70">Email</label>
-                    <input {...field('email')} type="email" autoComplete="email" inputMode="email" placeholder="you@example.com" className="field" required />
+                    <label htmlFor={`${uid}-email`} className={label}>Email</label>
+                    <input {...field('email')} type="email" autoComplete="email" inputMode="email" className="field" required />
                     <Err k="email" />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor={`${uid}-intent`} className="meta mb-2 block text-ink/70">I want to</label>
+                  <label htmlFor={`${uid}-intent`} className={label}>I want to</label>
                   <select {...field('intent')} className="field">
                     {INTENTS.map((i) => <option key={i.value} value={i.value}>{i.label}</option>)}
                   </select>
                 </div>
 
                 <div>
-                  <label htmlFor={`${uid}-message`} className="meta mb-2 block text-ink/70">Message</label>
-                  <textarea
-                    {...field('message')}
-                    rows={4}
-                    placeholder={values.intent === 'host' ? 'Where is the space, how many people fits, what nights work?' : 'What are you building, or what do you want to build?'}
-                    className="field"
-                    required
-                  />
+                  <label htmlFor={`${uid}-message`} className={label}>Message</label>
+                  <textarea {...field('message')} rows={4} className="field" required />
                   <Err k="message" />
                 </div>
 
-                <div className="flex flex-wrap items-center gap-x-5 gap-y-3 pt-1">
+                <div className="pt-1">
                   <button type="submit" className="btn btn-primary">
                     Send on WhatsApp
                     <WhatsAppIcon size={16} />
                   </button>
-                  <p className="text-sm text-ink/65">Opens WhatsApp with this pre-filled. Nothing is stored here.</p>
                 </div>
               </form>
             )}
